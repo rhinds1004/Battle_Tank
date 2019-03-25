@@ -6,10 +6,10 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Warning, TEXT("PlayerController Begin Play"))
-		ATank* debugTank = GetControlledTank();
+	ATank* debugTank = GetControlledTank();
 	if (debugTank)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Controlling: %s"), *(debugTank->GetName()))
+		UE_LOG(LogTemp, Warning, TEXT("Player Controlling: %s"), *(debugTank->GetName()))
 	}
 	else
 	{
