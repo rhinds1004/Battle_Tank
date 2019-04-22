@@ -21,6 +21,11 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	ATank* GetControlledTank() const;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Crosshair)
+		float CrosshairXLocation = 0.5;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Crosshair)
+		float CrosshairYLocation = 0.3333;
+
 
 private:
 	//Start the tank moving the barrel so that a shot would hit where
