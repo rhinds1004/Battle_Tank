@@ -50,9 +50,13 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) cons
 	//Find the crosshair position in pixel coorinates
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
-	FVector2D ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
+	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
 
-	//"De-project" crosshair coordsto a world direction
+	FVector WorldLocation;
+	if(GetLookDirection(ScreenLocation, WorldLocation))
+		UE_LOG(LogTemp, Warning, TEXT("World direction of the crosshair: %s"), *WorldLocation.ToString());
+
+	
 	//Send a raytrace through the crosshair dot 
 	//Check if raytrace hits an object. if yes, check if terrain
 	//set OutHitLocation to the world vector hit by the raytrace
@@ -61,5 +65,12 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) cons
 	return true;
 }
 
+//"De-project" 2D crosshair screen location to a Out 3D world direction 
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& OutLookDirection) const
+{
+	FVector CameraWorldLocation; //not used
 
+	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, OutLookDirection);
+
+}
 
