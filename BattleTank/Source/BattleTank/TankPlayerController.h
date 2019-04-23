@@ -14,7 +14,7 @@ UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
 public:
 
 	virtual void BeginPlay() override;
@@ -25,6 +25,9 @@ public:
 		float CrosshairXLocation = 0.5;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Crosshair)
 		float CrosshairYLocation = 0.3333;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Crosshair)
+		float LineTraceRange = 1000000;
+		//FVector LineTraceRange = FVector(100000.f, 100000.f, 100000.f);
 
 
 private:
@@ -36,6 +39,10 @@ private:
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 
 	bool GetLookDirection(FVector2D ScreeLocation, FVector & LookDirection) const;
+
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const;
+
+
 	
 
 

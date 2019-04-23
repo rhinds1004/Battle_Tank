@@ -44,7 +44,7 @@ void ATankPlayerController::AimTowardCrosshair()
 }
 
 //Get world location of linetrace through crosshair, true if hits landscape
-bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) const
+bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
 {
 	
 	//Find the crosshair position in pixel coorinates
@@ -52,10 +52,15 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) cons
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
 
-	FVector WorldLocation;
-	if(GetLookDirection(ScreenLocation, WorldLocation))
-		UE_LOG(LogTemp, Warning, TEXT("World direction of the crosshair: %s"), *WorldLocation.ToString());
-
+	FVector LookDirection;
+	if (GetLookDirection(ScreenLocation, LookDirection))
+	{
+		if (GetLookVectorHitLocation(LookDirection, OutHitLocation))
+		{
+			
+			UE_LOG(LogTemp, Warning, TEXT("World hitlocation of the crosshair: %s"), *OutHitLocation.ToString());
+		}
+	}
 	
 	//Send a raytrace through the crosshair dot 
 	//Check if raytrace hits an object. if yes, check if terrain
@@ -65,7 +70,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) cons
 	return true;
 }
 
-//"De-project" 2D crosshair screen location to a Out 3D world direction 
+//"De-project" 2D crosshair screen location to a Out 3D world direction unit vector 
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& OutLookDirection) const
 {
 	FVector CameraWorldLocation; //not used
@@ -74,3 +79,19 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 
 }
 
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const
+{
+	FHitResult HitResult;
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	FCollisionParameters Params;
+	
+	
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, StartLocation + LookDirection * LineTraceRange, ECollisionChannel::ECC_Visibility))
+	{
+			OutHitLocation = HitResult.ImpactPoint;
+			UE_LOG(LogTemp, Warning, TEXT("World hitlocation of the crosshair: %s"), *HitResult.GetActor()->GetName());
+			return true;
+	
+	}
+	return false;
+}
