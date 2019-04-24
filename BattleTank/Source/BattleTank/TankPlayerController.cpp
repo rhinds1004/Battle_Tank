@@ -38,7 +38,7 @@ void ATankPlayerController::AimTowardCrosshair()
 	FVector HitLocation;//Out parameter
 	if (GetSightRayHitLocation(HitLocation)) //Has "side-effect", is going to ray trace 
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Look direction: %s"), *HitLocation.ToString())
+		UE_LOG(LogTemp, Warning, TEXT("Look direction: %s"), *HitLocation.ToString())
 					//TODO Tell controlled tank to aim this point
 	}
 }
@@ -55,11 +55,8 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-		if (GetLookVectorHitLocation(LookDirection, OutHitLocation))
-		{
-			
-			UE_LOG(LogTemp, Warning, TEXT("World hitlocation of the crosshair: %s"), *OutHitLocation.ToString());
-		}
+		GetLookVectorHitLocation(LookDirection, OutHitLocation);
+		
 	}
 	
 	//Send a raytrace through the crosshair dot 
@@ -85,13 +82,15 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	auto StartLocation = PlayerCameraManager->GetCameraLocation();
 	FCollisionParameters Params;
 	
-	
+	//could also use GetHitResultAtScreenPosition if input param is changed to 2d
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, StartLocation + LookDirection * LineTraceRange, ECollisionChannel::ECC_Visibility))
 	{
+		
 			OutHitLocation = HitResult.ImpactPoint;
-			UE_LOG(LogTemp, Warning, TEXT("World hitlocation of the crosshair: %s"), *HitResult.GetActor()->GetName());
+		//	UE_LOG(LogTemp, Warning, TEXT("World hitlocation of the crosshair: %s"), *HitResult.GetActor()->GetName());
 			return true;
-	
+		
 	}
+	OutHitLocation = FVector(0);
 	return false;
 }
