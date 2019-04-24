@@ -55,15 +55,8 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-		GetLookVectorHitLocation(LookDirection, OutHitLocation);
-		
+		GetLookVectorHitLocation(LookDirection, OutHitLocation);	
 	}
-	
-	//Send a raytrace through the crosshair dot 
-	//Check if raytrace hits an object. if yes, check if terrain
-	//set OutHitLocation to the world vector hit by the raytrace
-	//return result of raytrace check
-//	OutHitLocation = FVector(1.0);
 	return true;
 }
 
@@ -76,6 +69,7 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 
 }
 
+//does a line trace and Out params the Impact Point (the world location of the hit) or a vector of all zeros if no hit.
 bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const
 {
 	FHitResult HitResult;
