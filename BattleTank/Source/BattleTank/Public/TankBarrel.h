@@ -13,8 +13,13 @@ UCLASS()
 class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 {
 	GENERATED_BODY()
-	
-	
-	
-	
+
+public:
+		UFUNCTION()
+			void ElevateBarrel(float DegreesPerSecond);
+
+		
+private:
+		
+		
 };

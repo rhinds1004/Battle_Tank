@@ -4,6 +4,7 @@
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStaticsTypes.h"
 #include "Runtime/Engine/Public/CollisionQueryParams.h"
+#include "TankBarrel.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -16,9 +17,15 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
-	Barrel = BarrelToSet;
+	if (!BarrelToSet)
+	{
+		Barrel = BarrelToSet;
+	}
+	UE_LOG(LogTemp, Error, TEXT("Unable to set Barrel reference"))
+
+	
 }
 
 // Called when the game starts
@@ -70,7 +77,8 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto BarrelRotation = Barrel->GetForwardVector().ToOrientationRotator();
 	auto AimAsRotator = AimDirection.ToOrientationRotator();
 	auto DeltaRotator = AimAsRotator - BarrelRotation;
-	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *DeltaRotator.ToString());
+	
 
+	Barrel->ElevateBarrel(5); //TODO remove magic number
 
 }

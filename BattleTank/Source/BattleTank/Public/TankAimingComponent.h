@@ -17,7 +17,7 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(class UTankBarrel* BarrelToSet);
 
 	//TODO add set turret
 
@@ -34,8 +34,10 @@ public:
 
 
 private:
-	UStaticMeshComponent* Barrel = nullptr;
+	UPROPERTY()
+	class UTankBarrel* Barrel = nullptr;
 	void MoveBarrelTowards(FVector AimDirection);
+	
 
 	
 
