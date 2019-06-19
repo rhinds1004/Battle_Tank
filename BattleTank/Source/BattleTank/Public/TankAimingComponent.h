@@ -8,6 +8,8 @@
 #include "TankAimingComponent.generated.h"
 
 
+class UTankBarrel;
+
 //Holds barrels' poroperties and evelvate method
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
@@ -18,7 +20,7 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	void SetBarrelReference(class UTankBarrel* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	//TODO add set turret
 
@@ -36,7 +38,7 @@ public:
 
 private:
 	UPROPERTY()
-	class UTankBarrel* Barrel = nullptr;
+	UTankBarrel* Barrel = nullptr;
 	void MoveBarrelTowards(FVector AimDirection);
 	
 

@@ -11,7 +11,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = true; //TODO does this component need to tick?
 
 	// ...
 }
@@ -19,12 +19,14 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
-	if (!BarrelToSet)
+	if (BarrelToSet)
 	{
 		Barrel = BarrelToSet;
 	}
-	UE_LOG(LogTemp, Error, TEXT("Unable to set Barrel reference"))
-
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Unable to set Barrel reference"))
+	}
 	
 }
 
@@ -54,14 +56,23 @@ void UTankAimingComponent::AimAtTarget(FVector HitLocation, float LaunchSpeed)
 	TArray<AActor *>ActorsToIgnore;
 	FVector OutLaunchVelocity(0);
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile")); // getsocketlocation will return the component location if socket isn't found
-	if (UGameplayStatics::SuggestProjectileVelocity(this, OUT OutLaunchVelocity, StartLocation, HitLocation,
+	//TODO trace option always returns true if set to do not trace. If set to Tracefullpath solution and no solutions occur even when cursor is not moved.
+	bool SuggestProjectileVelocityResult = UGameplayStatics::SuggestProjectileVelocity(this, OUT OutLaunchVelocity, StartLocation, HitLocation,
 		LaunchSpeed, false, 0.f, 0.f, ESuggestProjVelocityTraceOption::DoNotTrace,
-		FCollisionResponseParams::DefaultResponseParam, ActorsToIgnore, false))
+		FCollisionResponseParams::DefaultResponseParam, ActorsToIgnore, false);
+	if (SuggestProjectileVelocityResult)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 
 	//	UE_LOG(LogTemp, Warning, TEXT("Aiming at %s"), *AimDirection.ToString());
 		MoveBarrelTowards(AimDirection);
+		UE_LOG(LogTemp, Warning, TEXT("at time %f Aim Solution Found"), GetWorld()->GetTimeSeconds());
+	
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("at time %f NO Aim Solution Found"), GetWorld()->GetTimeSeconds());
+	
 	}
 	//if no solution do nothing
 }
