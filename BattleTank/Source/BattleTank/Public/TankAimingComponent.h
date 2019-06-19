@@ -8,6 +8,7 @@
 #include "TankAimingComponent.generated.h"
 
 
+//Holds barrels' poroperties and evelvate method
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
