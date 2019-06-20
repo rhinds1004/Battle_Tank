@@ -91,6 +91,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto DeltaRotator = AimAsRotator - BarrelRotation;
 	
 
-	Barrel->ElevateBarrel(5); //TODO remove magic number
+	Barrel->ElevateBarrel(DeltaRotator.Pitch); 
 
 }
