@@ -5,6 +5,7 @@
 #include "Runtime/Engine/Classes/Kismet/GameplayStaticsTypes.h"
 #include "Runtime/Engine/Public/CollisionQueryParams.h"
 #include "TankBarrel.h"
+#include "Engine/World.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -19,6 +20,7 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
+	//TODO remove this condition check?
 	if (BarrelToSet)
 	{
 		Barrel = BarrelToSet;
@@ -58,14 +60,13 @@ void UTankAimingComponent::AimAtTarget(FVector HitLocation, float LaunchSpeed)
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile")); // getsocketlocation will return the component location if socket isn't found
 	//TODO trace option always returns true if set to do not trace. If set to Tracefullpath solution and no solutions occur even when cursor is not moved.
 	bool SuggestProjectileVelocityResult = UGameplayStatics::SuggestProjectileVelocity(this, OUT OutLaunchVelocity, StartLocation, HitLocation,
-		LaunchSpeed, false, 0.f, 0.f, ESuggestProjVelocityTraceOption::DoNotTrace,
+		LaunchSpeed, false, 0.f, 0.f, ESuggestProjVelocityTraceOption::TraceFullPath,
 		FCollisionResponseParams::DefaultResponseParam, ActorsToIgnore, false);
 	if (SuggestProjectileVelocityResult)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-
-	//	UE_LOG(LogTemp, Warning, TEXT("Aiming at %s"), *AimDirection.ToString());
 		MoveBarrelTowards(AimDirection);
+		
 		UE_LOG(LogTemp, Warning, TEXT("at time %f Aim Solution Found"), GetWorld()->GetTimeSeconds());
 	
 	}

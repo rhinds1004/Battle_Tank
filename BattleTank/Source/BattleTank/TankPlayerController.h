@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "Tank.h"
 #include "TankPlayerController.generated.h"
+
+//Forward Declarations
+class ATank;
 
 /**
  * 
@@ -27,7 +29,7 @@ public:
 		float CrosshairYLocation = 0.3333;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Crosshair)
 		float LineTraceRange = 1000000;
-		//FVector LineTraceRange = FVector(100000.f, 100000.f, 100000.f);
+
 
 
 private:
