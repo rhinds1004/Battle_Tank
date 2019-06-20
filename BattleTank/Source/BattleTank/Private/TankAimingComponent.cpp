@@ -50,7 +50,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-//
+//Currently set to do no trace. Maybe tracefull path better option. use the params to get what was hit and use that for damage?
 void UTankAimingComponent::AimAtTarget(FVector HitLocation, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
@@ -58,9 +58,9 @@ void UTankAimingComponent::AimAtTarget(FVector HitLocation, float LaunchSpeed)
 	TArray<AActor *>ActorsToIgnore;
 	FVector OutLaunchVelocity(0);
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile")); // getsocketlocation will return the component location if socket isn't found
-	//TODO trace option always returns true if set to do not trace. If set to Tracefullpath solution and no solutions occur even when cursor is not moved.
+//TODO do we not want to know what the projectile hit? If so using do not trace wont work. Set
 	bool SuggestProjectileVelocityResult = UGameplayStatics::SuggestProjectileVelocity(this, OUT OutLaunchVelocity, StartLocation, HitLocation,
-		LaunchSpeed, false, 0.f, 0.f, ESuggestProjVelocityTraceOption::TraceFullPath,
+		LaunchSpeed, false, 0.f, 0.f, ESuggestProjVelocityTraceOption::DoNotTrace,
 		FCollisionResponseParams::DefaultResponseParam, ActorsToIgnore, false);
 	if (SuggestProjectileVelocityResult)
 	{
