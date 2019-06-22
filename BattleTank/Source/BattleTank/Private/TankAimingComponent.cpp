@@ -71,40 +71,28 @@ void UTankAimingComponent::AimAtTarget(FVector HitLocation, float LaunchSpeed)
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
 		MoveTurretTowrds(AimDirection);
-		
-	//	UE_LOG(LogTemp, Warning, TEXT("at time %f Aim Solution Found"), GetWorld()->GetTimeSeconds());
-	
+			
 	}
 	else
 	{
-	//	UE_LOG(LogTemp, Warning, TEXT("at time %f NO Aim Solution Found"), GetWorld()->GetTimeSeconds());
+	// TODO what to do if no solution found?
 	
 	}
-	//if no solution do nothing
+
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	/*
-		Get where I want barrel to point in the world
-		make the location relative to barrel
-		move the xyz of the barrel using the relative vector calculated above
-	*/
-
 	auto BarrelRotation = Barrel->GetForwardVector().ToOrientationRotator();
 	auto AimAsRotator = AimDirection.ToOrientationRotator();
 	auto DeltaRotator = AimAsRotator - BarrelRotation;
 	Barrel->ElevateBarrel(DeltaRotator.Pitch); 
-	
 }
 
 void UTankAimingComponent::MoveTurretTowrds(FVector AimDirection)
 {
-
 	auto TurretRotation = Turret->GetForwardVector().ToOrientationRotator();
 	auto AimAsRotator = AimDirection.ToOrientationRotator();
-	auto DeltaRotator = AimAsRotator - TurretRotation;
-	
+	auto DeltaRotator = AimAsRotator - TurretRotation;	
 	Turret->RotateTurret(DeltaRotator.Yaw);
-
 }

@@ -11,6 +11,7 @@ void ATankAIController::BeginPlay()
 	Super::BeginPlay();
 	ATank* debugTank = GetControlledTank();
 	ATank* playerTank = GetPlayerTank();
+	//TODO clean up. DO I need teh print statements. use ensure on pointer? 
 	if (playerTank)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Found Player controlled tank: %s "), *(playerTank->GetName()))
