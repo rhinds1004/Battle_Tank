@@ -5,6 +5,7 @@
 #include "Runtime/Engine/Classes/Kismet/GameplayStaticsTypes.h"
 #include "Runtime/Engine/Public/CollisionQueryParams.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "Engine/World.h"
 
 // Sets default values for this component's properties
@@ -28,6 +29,19 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("Unable to set Barrel reference"))
+	}
+	
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
+{
+	if (TurretToSet)
+	{
+		Turret = TurretToSet;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Unable to set Turret reference"))
 	}
 	
 }
@@ -66,13 +80,14 @@ void UTankAimingComponent::AimAtTarget(FVector HitLocation, float LaunchSpeed)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
+		MoveTurretTowrds(AimDirection);
 		
-		UE_LOG(LogTemp, Warning, TEXT("at time %f Aim Solution Found"), GetWorld()->GetTimeSeconds());
+	//	UE_LOG(LogTemp, Warning, TEXT("at time %f Aim Solution Found"), GetWorld()->GetTimeSeconds());
 	
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("at time %f NO Aim Solution Found"), GetWorld()->GetTimeSeconds());
+	//	UE_LOG(LogTemp, Warning, TEXT("at time %f NO Aim Solution Found"), GetWorld()->GetTimeSeconds());
 	
 	}
 	//if no solution do nothing
@@ -89,8 +104,16 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto BarrelRotation = Barrel->GetForwardVector().ToOrientationRotator();
 	auto AimAsRotator = AimDirection.ToOrientationRotator();
 	auto DeltaRotator = AimAsRotator - BarrelRotation;
-	
-
 	Barrel->ElevateBarrel(DeltaRotator.Pitch); 
+	
+}
+
+void UTankAimingComponent::MoveTurretTowrds(FVector AimDirection)
+{
+	auto TurretRotation = Turret->GetForwardVector().ToOrientationRotator();
+	auto AimAsRotator = AimDirection.ToOrientationRotator();
+	auto DeltaRotator = AimAsRotator - TurretRotation;
+	
+	Turret->RotateTurret(DeltaRotator.Yaw);
 
 }
