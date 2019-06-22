@@ -13,7 +13,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true; //TODO does this component need to tick?
+	PrimaryComponentTick.bCanEverTick = false; 
 
 	// ...
 }
@@ -21,14 +21,9 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
-	//TODO remove this condition check?
 	if (ensure(BarrelToSet))
 	{
 		Barrel = BarrelToSet;
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Unable to set Barrel reference"))
 	}
 	
 }
@@ -39,11 +34,6 @@ void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
 	{
 		Turret = TurretToSet;
 	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Unable to set Turret reference"))
-	}
-	
 }
 
 // Called when the game starts
