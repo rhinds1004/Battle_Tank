@@ -22,7 +22,7 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	//TODO remove this condition check?
-	if (BarrelToSet)
+	if (ensure(BarrelToSet))
 	{
 		Barrel = BarrelToSet;
 	}
@@ -35,7 +35,7 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 
 void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
 {
-	if (TurretToSet)
+	if (ensure(TurretToSet))
 	{
 		Turret = TurretToSet;
 	}
@@ -110,6 +110,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 void UTankAimingComponent::MoveTurretTowrds(FVector AimDirection)
 {
+
 	auto TurretRotation = Turret->GetForwardVector().ToOrientationRotator();
 	auto AimAsRotator = AimDirection.ToOrientationRotator();
 	auto DeltaRotator = AimAsRotator - TurretRotation;
