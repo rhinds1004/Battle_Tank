@@ -1,6 +1,7 @@
 // Robert Hinds
 
 #include "Projectile.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 
 // Sets default values
@@ -8,7 +9,8 @@ AProjectile::AProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
+	ProjectileMovementComponent->bAutoActivate = false;
 }
 
 // Called when the game starts or when spawned
@@ -25,3 +27,16 @@ void AProjectile::Tick(float DeltaTime)
 
 }
 
+
+/// The forward vector is the projectiles's forward vector. This works because when the projectile 
+/// was spawned we set the location to be the socket owned by the barrel. Therefore the 
+/// projectile will be facing the same direction as the barrel.
+/*
+ It is assumed that the projectile is facing the correct direction when this function is called.
+*/
+void AProjectile::LaunchProjectile(float Speed)
+{
+	ProjectileMovementComponent->InitialSpeed = Speed;
+	ProjectileMovementComponent->SetVelocityInLocalSpace(FVector::ForwardVector * Speed); 
+	ProjectileMovementComponent->Activate();
+}

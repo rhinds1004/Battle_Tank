@@ -60,8 +60,14 @@ void ATank::AimAt(FVector HitLocation)
 	TankAimingComponent->AimAtTarget(HitLocation, LaunchSpeed);	
 }
 
+///NOTE: the fact the projectile's location and rotation are set to the socket's
+/// is used by the LaunchProjectile function of the Projectile class. 
+/// it is assumed that the projectile is facing the correct direction when LaunchProjectile function is called.
 void ATank::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Firing"));
-	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, GetBarrelReference()->GetSocketLocation(FName("Projectile")), GetBarrelReference()->GetSocketRotation(FName("Projectile")));
+	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
+		GetBarrelReference()->GetSocketLocation(FName("Projectile")),
+		GetBarrelReference()->GetSocketRotation(FName("Projectile")));
+
+	Projectile->LaunchProjectile(LaunchSpeed);
 }
