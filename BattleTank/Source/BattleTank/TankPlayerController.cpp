@@ -74,7 +74,6 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	{
 		
 			OutHitLocation = HitResult.ImpactPoint;
-		//	UE_LOG(LogTemp, Warning, TEXT("World hitlocation of the crosshair: %s"), *HitResult.GetActor()->GetName());
 			return true;
 		
 	}

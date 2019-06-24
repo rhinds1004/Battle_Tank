@@ -63,11 +63,18 @@ void ATank::AimAt(FVector HitLocation)
 ///NOTE: the fact the projectile's location and rotation are set to the socket's
 /// is used by the LaunchProjectile function of the Projectile class. 
 /// it is assumed that the projectile is facing the correct direction when LaunchProjectile function is called.
+//Fires a projectile if it has been X number of seconds from the last time a projectile was actually launched.
 void ATank::Fire()
 {
-	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
-		GetBarrelReference()->GetSocketLocation(FName("Projectile")),
-		GetBarrelReference()->GetSocketRotation(FName("Projectile")));
-
-	Projectile->LaunchProjectile(LaunchSpeed);
+	bool IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	auto Barrel = GetBarrelReference();
+	
+	if (Barrel && IsReloaded)
+	{
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile")));
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+	}
 }

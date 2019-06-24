@@ -40,9 +40,10 @@ public:
 
 private:
 	UPROPERTY()
-	UTankBarrel* Barrel = nullptr;
+		UTankBarrel* Barrel = nullptr;
 	UPROPERTY()
 		UTankTurret* Turret = nullptr;
+
 	void MoveBarrelTowards(FVector AimDirection);
 
 	void MoveTurretTowrds(FVector AimDirection);
