@@ -11,6 +11,7 @@ AProjectile::AProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 	ProjectileMovementComponent->bAutoActivate = false;
+	InitialLifeSpan = 7.f;
 }
 
 // Called when the game starts or when spawned

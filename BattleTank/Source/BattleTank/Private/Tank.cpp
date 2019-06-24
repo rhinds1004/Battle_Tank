@@ -42,7 +42,7 @@ UTankBarrel* ATank::GetBarrelReference()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	verifyf(ProjectileBlueprint, TEXT("Projectile Blueprint Not Set!"))
 }
 
 
