@@ -66,7 +66,7 @@ void ATank::AimAt(FVector HitLocation)
 //Fires a projectile if it has been X number of seconds from the last time a projectile was actually launched.
 void ATank::Fire()
 {
-	bool IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	bool IsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
 	auto Barrel = GetBarrelReference();
 	
 	if (Barrel && IsReloaded)
@@ -75,6 +75,6 @@ void ATank::Fire()
 			Barrel->GetSocketLocation(FName("Projectile")),
 			Barrel->GetSocketRotation(FName("Projectile")));
 		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
+		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
 }

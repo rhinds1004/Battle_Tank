@@ -18,6 +18,6 @@ void ATankAIController::Tick(float DeltaTime)
 		//TODO move to player
 		//Aim towards player	
 		ControlledTank->AimAt(GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation());
-		//TODO Fire if ready, limit fire rate
+		//TODO only fire when barrel is pointed at player
 		ControlledTank->Fire();	
 }
