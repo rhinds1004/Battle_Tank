@@ -7,6 +7,7 @@
 #include "Components/InputComponent.h"
 #include "Engine/World.h"
 #include "Projectile.h"
+#include "TankTrack.h"
 
 
 
@@ -33,6 +34,24 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
+void ATank::SetLeftTrack(UTankTrack * TrackToSet)
+{
+	if (ensure(TrackToSet))
+	{
+		LeftTrack = TrackToSet;
+	}
+	
+}
+
+void ATank::SetRightTrack(UTankTrack * TrackToSet)
+{
+	if (ensure(TrackToSet))
+	{
+		RightTrack = TrackToSet;
+	}
+	
+}
+
 UTankBarrel* ATank::GetBarrelReference()
 {
 	return TankAimingComponent->GetBarrelReference();
@@ -51,6 +70,8 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ATank::Fire);
+	PlayerInputComponent->BindAxis("Left Track Throttle", this, &ATank::SetLeftThrottle);
+	PlayerInputComponent->BindAxis("Right Track Throttle", this, &ATank::SetRightThrottle);
 
 }
 
@@ -77,4 +98,14 @@ void ATank::Fire()
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
+}
+
+void ATank::SetLeftThrottle(float amt)
+{
+	LeftTrack->SetThrottle(amt);
+}
+
+void ATank::SetRightThrottle(float amt)
+{
+	RightTrack->SetThrottle(amt);
 }

@@ -9,6 +9,7 @@
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
+class TankTrack;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -23,10 +24,21 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Firing)
 		void Fire();
 
+	UFUNCTION(BlueprintCallable, Category = Input)
+	void SetLeftThrottle(float amt);
+
+	UFUNCTION(BlueprintCallable, Category = Input)
+		void SetRightThrottle(float amt);
+
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* TurretToSet);
+	UFUNCTION(BlueprintCallable, Category = Setup)
+		void SetLeftTrack(UTankTrack* TrackToSet);
+	UFUNCTION(BlueprintCallable, Category = Setup)
+		void SetRightTrack(UTankTrack* TrackToSet);
+
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		UTankBarrel* GetBarrelReference();
@@ -54,5 +66,11 @@ private:
 		float ReloadTimeInSeconds = 3.f;
 
 	double LastFireTime = 0;
-		
+	
+	UPROPERTY()
+	UTankTrack* LeftTrack = nullptr;
+
+	UPROPERTY()
+		UTankTrack* RightTrack = nullptr;
+
 };
