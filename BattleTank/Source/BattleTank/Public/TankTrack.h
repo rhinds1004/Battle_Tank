@@ -19,8 +19,11 @@ private:
 
 
 public:
-		UFUNCTION(BlueprintCallable, category = Input)
-		void SetThrottle(float ThrottleAmt);
+	UFUNCTION(BlueprintCallable, category = Input)
+	void SetThrottle(float ThrottleAmt);
+
+	UPROPERTY(EditDefaultsOnly, category = Setup)
+		float TrackMaxDriveForce = 400000;  //Assume tank weight is 40 and 1 g accelleration
 	
 	
 };
