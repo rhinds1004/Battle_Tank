@@ -25,6 +25,9 @@ public:
 		void Fire();
 
 	UFUNCTION(BlueprintCallable, Category = Input)
+	void Forward(float amt);
+
+	UFUNCTION(BlueprintCallable, Category = Input)
 	void SetLeftThrottle(float amt);
 
 	UFUNCTION(BlueprintCallable, Category = Input)

@@ -72,7 +72,8 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ATank::Fire);
 	PlayerInputComponent->BindAxis("Left Track Throttle", this, &ATank::SetLeftThrottle);
 	PlayerInputComponent->BindAxis("Right Track Throttle", this, &ATank::SetRightThrottle);
-
+	PlayerInputComponent->BindAxis("Forward", this, &ATank::Forward);
+	PlayerInputComponent->BindAxis("Backward", this, &ATank::Forward);
 }
 
 
@@ -98,6 +99,11 @@ void ATank::Fire()
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
+}
+void ATank::Forward(float amt)
+{
+	SetLeftThrottle(amt);
+	SetLeftThrottle(amt);
 }
 
 void ATank::SetLeftThrottle(float amt)
