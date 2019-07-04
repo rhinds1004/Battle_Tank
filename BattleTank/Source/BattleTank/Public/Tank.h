@@ -6,10 +6,14 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+//Forward Declarations
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
-class TankTrack;
+class UTankTrack;
+class UTankMovementComponent;
+
+
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -24,8 +28,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Firing)
 		void Fire();
 
-	UFUNCTION(BlueprintCallable, Category = Input)
-	void Forward(float amt);
+	UFUNCTION()
+	void MoveForward(float amt);
 
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void SetLeftThrottle(float amt);
@@ -42,12 +46,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		void SetRightTrack(UTankTrack* TrackToSet);
 
-
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		UTankBarrel* GetBarrelReference();
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Setup)
+		UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:
 	// Sets default values for this pawn's properties

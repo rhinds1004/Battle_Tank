@@ -8,6 +8,7 @@
 #include "Engine/World.h"
 #include "Projectile.h"
 #include "TankTrack.h"
+#include "TankMovementComponent.h"
 
 
 
@@ -20,6 +21,8 @@ ATank::ATank()
 	
 	//No need to protect points as assed at construction
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
+	
 }
 
 
@@ -72,8 +75,8 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ATank::Fire);
 	PlayerInputComponent->BindAxis("Left Track Throttle", this, &ATank::SetLeftThrottle);
 	PlayerInputComponent->BindAxis("Right Track Throttle", this, &ATank::SetRightThrottle);
-	PlayerInputComponent->BindAxis("Forward", this, &ATank::Forward);
-	PlayerInputComponent->BindAxis("Backward", this, &ATank::Forward);
+	PlayerInputComponent->BindAxis("Move Forward", this, &ATank::MoveForward);
+
 }
 
 
@@ -100,10 +103,9 @@ void ATank::Fire()
 		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
 }
-void ATank::Forward(float amt)
+void ATank::MoveForward(float amt)
 {
-	SetLeftThrottle(amt);
-	SetLeftThrottle(amt);
+	TankMovementComponent->IntendMoveForward(amt);
 }
 
 void ATank::SetLeftThrottle(float amt)
