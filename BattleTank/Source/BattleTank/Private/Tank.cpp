@@ -19,13 +19,9 @@ ATank::ATank()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 	
-	//No need to protect points as assed at construction
+	//No need to protect points as assessed at construction
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
-	
 }
-
-
 
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
@@ -37,27 +33,15 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
-void ATank::SetLeftTrack(UTankTrack * TrackToSet)
-{
-	if (ensure(TrackToSet))
-	{
-		LeftTrack = TrackToSet;
-	}
-	
-}
-
-void ATank::SetRightTrack(UTankTrack * TrackToSet)
-{
-	if (ensure(TrackToSet))
-	{
-		RightTrack = TrackToSet;
-	}
-	
-}
 
 UTankBarrel* ATank::GetBarrelReference()
 {
 	return TankAimingComponent->GetBarrelReference();
+}
+
+void ATank::SetMyMoveComp(UTankMovementComponent * MyTankMovementComponent)
+{
+	this->TankMovementComponent = MyTankMovementComponent;
 }
 
 // Called when the game starts or when spawned
@@ -65,6 +49,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	verifyf(ProjectileBlueprint, TEXT("Projectile Blueprint Not Set!"))
+		
 }
 
 
@@ -73,15 +58,16 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ATank::Fire);
+	PlayerInputComponent->BindAxis("Move Forward", this, &ATank::MoveForward);
 	PlayerInputComponent->BindAxis("Left Track Throttle", this, &ATank::SetLeftThrottle);
 	PlayerInputComponent->BindAxis("Right Track Throttle", this, &ATank::SetRightThrottle);
-	PlayerInputComponent->BindAxis("Move Forward", this, &ATank::MoveForward);
 
 }
 
 
 void ATank::AimAt(FVector HitLocation)
 {
+
 	TankAimingComponent->AimAtTarget(HitLocation, LaunchSpeed);	
 }
 
@@ -103,17 +89,18 @@ void ATank::Fire()
 		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
 }
+
 void ATank::MoveForward(float amt)
-{
+{	
 	TankMovementComponent->IntendMoveForward(amt);
 }
 
 void ATank::SetLeftThrottle(float amt)
 {
-	LeftTrack->SetThrottle(amt);
+	TankMovementComponent->GetLeftTrack()->SetThrottle(amt);
 }
 
 void ATank::SetRightThrottle(float amt)
 {
-	RightTrack->SetThrottle(amt);
+	TankMovementComponent->GetRightTrack()->SetThrottle(amt);
 }

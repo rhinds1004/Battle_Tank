@@ -41,19 +41,20 @@ public:
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* TurretToSet);
-	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetLeftTrack(UTankTrack* TrackToSet);
-	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetRightTrack(UTankTrack* TrackToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		UTankBarrel* GetBarrelReference();
 
+
+	UFUNCTION()
+		void SetMyMoveComp(UTankMovementComponent* MyTankMovementComponent);
+
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Setup)
+	UPROPERTY(BlueprintReadOnly, Category = Setup)
 		UTankMovementComponent* TankMovementComponent = nullptr;
+
 
 private:
 	// Sets default values for this pawn's properties
@@ -75,11 +76,7 @@ private:
 		float ReloadTimeInSeconds = 3.f;
 
 	double LastFireTime = 0;
-	
-	UPROPERTY()
-	UTankTrack* LeftTrack = nullptr;
 
-	UPROPERTY()
-		UTankTrack* RightTrack = nullptr;
+	
 
 };
