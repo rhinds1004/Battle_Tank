@@ -25,16 +25,17 @@ public:
 
 	UFUNCTION(BlueprintCallable, category = Input)
 	void IntendMoveForward(float Throw);
+
+	UFUNCTION(BlueprintCallable, category = Input)
+	void IntendMoveRight(float Throw);
 	
 	UFUNCTION()
 		UTankTrack* GetLeftTrack();
 	UFUNCTION()
 		UTankTrack* GetRightTrack();
 
-	UPROPERTY(BlueprintReadOnly, Category = Setup)
-		UTankTrack* LeftTrack = nullptr;
-	UPROPERTY(BlueprintReadOnly, Category = Setup)
-		UTankTrack* RightTrack = nullptr;
-private:
 
+private:
+		UTankTrack* LeftTrack = nullptr;
+		UTankTrack* RightTrack = nullptr;
 };

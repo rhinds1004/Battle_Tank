@@ -59,6 +59,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ATank::Fire);
 	PlayerInputComponent->BindAxis("Move Forward", this, &ATank::MoveForward);
+	PlayerInputComponent->BindAxis("Move Right", this, &ATank::MoveRight);
 	PlayerInputComponent->BindAxis("Left Track Throttle", this, &ATank::SetLeftThrottle);
 	PlayerInputComponent->BindAxis("Right Track Throttle", this, &ATank::SetRightThrottle);
 
@@ -94,6 +95,12 @@ void ATank::MoveForward(float amt)
 {	
 	TankMovementComponent->IntendMoveForward(amt);
 }
+
+void ATank::MoveRight(float amt)
+{
+	TankMovementComponent->IntendMoveRight(amt);
+}
+
 
 void ATank::SetLeftThrottle(float amt)
 {

@@ -19,12 +19,20 @@ void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* 
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Indend move forward: %f"), Throw);
 	if (!LeftTrack|| !RightTrack) { return; }
 	
 		LeftTrack->SetThrottle(Throw);
 		RightTrack->SetThrottle(Throw);
 }
+
+void UTankMovementComponent::IntendMoveRight(float Throw)
+{
+	if (!LeftTrack || !RightTrack) { return; }
+	UE_LOG(LogTemp, Warning,  TEXT("Intend right: %f"), Throw);
+	LeftTrack->SetThrottle(Throw);
+	RightTrack->SetThrottle(-Throw);
+}
+
 
 UTankTrack * UTankMovementComponent::GetLeftTrack()
 {

@@ -31,6 +31,9 @@ public:
 	UFUNCTION()
 	void MoveForward(float amt);
 
+	UFUNCTION()
+	void MoveRight(float amt);
+
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void SetLeftThrottle(float amt);
 
