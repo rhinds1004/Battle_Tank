@@ -34,6 +34,8 @@ public:
 	UFUNCTION()
 		UTankTrack* GetRightTrack();
 
+	//TODO check if can move out of public
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 private:
 		UTankTrack* LeftTrack = nullptr;

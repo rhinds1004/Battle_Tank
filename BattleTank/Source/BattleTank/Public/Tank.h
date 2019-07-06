@@ -52,6 +52,7 @@ public:
 	UFUNCTION()
 		void SetMyMoveComp(UTankMovementComponent* MyTankMovementComponent);
 
+
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 

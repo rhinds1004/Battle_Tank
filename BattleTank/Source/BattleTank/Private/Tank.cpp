@@ -44,6 +44,7 @@ void ATank::SetMyMoveComp(UTankMovementComponent * MyTankMovementComponent)
 	this->TankMovementComponent = MyTankMovementComponent;
 }
 
+
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {

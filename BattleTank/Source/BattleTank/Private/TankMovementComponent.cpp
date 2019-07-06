@@ -28,7 +28,6 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 void UTankMovementComponent::IntendMoveRight(float Throw)
 {
 	if (!LeftTrack || !RightTrack) { return; }
-	UE_LOG(LogTemp, Warning,  TEXT("Intend right: %f"), Throw);
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
 }
@@ -42,5 +41,11 @@ UTankTrack * UTankMovementComponent::GetLeftTrack()
 UTankTrack * UTankMovementComponent::GetRightTrack()
 {
 	return RightTrack;
+}
+
+void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed)
+{
+	//Don't need to call super as we're replacing the functionality
+	UE_LOG(LogTemp, Warning, TEXT("TANK: %s MoveVelocity: %s"), *(GetOwner()->GetName()), *MoveVelocity.ToString());
 }
 
