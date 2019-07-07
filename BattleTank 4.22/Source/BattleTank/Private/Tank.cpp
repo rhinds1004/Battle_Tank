@@ -80,7 +80,7 @@ void ATank::AimAt(FVector HitLocation)
 void ATank::Fire()
 {
 	bool IsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
-	auto Barrel = GetBarrelReference();
+	UTankBarrel* Barrel = GetBarrelReference();
 	
 	if (Barrel && IsReloaded)
 	{

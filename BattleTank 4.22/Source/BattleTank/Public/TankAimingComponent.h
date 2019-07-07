@@ -20,7 +20,7 @@ enum class EFiringState : uint8
 class UTankBarrel;
 class UTankTurret;
 
-//Holds barrels' poroperties and evelvate method
+//Owns the barrel and turrent of the tank. And controls moving components to the proper locations.
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
