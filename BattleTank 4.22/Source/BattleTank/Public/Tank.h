@@ -40,10 +40,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Input)
 		void SetRightThrottle(float amt);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* TurretToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		UTankBarrel* GetBarrelReference();

@@ -32,23 +32,6 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret * Tu
 	OwnerTank->SetMyAimComp(this);
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
-{
-	if (ensure(BarrelToSet))
-	{
-		Barrel = BarrelToSet;
-	}
-	
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
-{
-	if (ensure(TurretToSet))
-	{
-		Turret = TurretToSet;
-	}
-}
-
 UTankBarrel* UTankAimingComponent::GetBarrelReference()
 {
 	return Barrel;
