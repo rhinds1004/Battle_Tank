@@ -20,7 +20,7 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 	
 	//No need to protect points as assessed at construction
-	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	//TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 }
 
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
@@ -42,6 +42,11 @@ UTankBarrel* ATank::GetBarrelReference()
 void ATank::SetMyMoveComp(UTankMovementComponent * MyTankMovementComponent)
 {
 	this->TankMovementComponent = MyTankMovementComponent;
+}
+
+void ATank::SetMyAimComp(UTankAimingComponent * MyTankAimingComponent)
+{
+	this->TankAimingComponent = MyTankAimingComponent;
 }
 
 
@@ -80,7 +85,7 @@ void ATank::AimAt(FVector HitLocation)
 void ATank::Fire()
 {
 	bool IsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
-	UTankBarrel* Barrel = GetBarrelReference();
+	UTankBarrel* Barrel = TankAimingComponent->GetBarrelReference();
 	
 	if (Barrel && IsReloaded)
 	{

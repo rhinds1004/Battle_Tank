@@ -48,9 +48,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		UTankBarrel* GetBarrelReference();
 
+	//WorkArounds Needed as blueprint spawned component references are getting set to null after there initialize function is compeleted.
 
 	UFUNCTION()
 		void SetMyMoveComp(UTankMovementComponent* MyTankMovementComponent);
+
+	UFUNCTION()
+	void SetMyAimComp(UTankAimingComponent* MyTankAimingComponent);
 
 
 protected:

@@ -7,6 +7,7 @@
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "Engine/World.h"
+#include "Tank.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -25,6 +26,10 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret * Tu
 		Barrel = BarrelToSet;
 		Turret = TurretToSet;
 	}
+
+	//TODO REmove this workaround. Needed because the reference to the tank movement component is getting nulled in the tank class after this function returns. Need to find out why.
+	ATank* OwnerTank = Cast<ATank>(GetOwner());
+	OwnerTank->SetMyAimComp(this);
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
