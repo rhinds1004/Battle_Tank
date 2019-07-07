@@ -22,14 +22,18 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	ATank* GetControlledTank() const;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Crosshair)
+
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Crosshair")
 		float CrosshairXLocation = 0.5;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Crosshair)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Crosshair")
 		float CrosshairYLocation = 0.3333;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Crosshair)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Crosshair")
 		float LineTraceRange = 1000000;
 
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		ATank* GetControlledTank() const;
 
 
 private:
