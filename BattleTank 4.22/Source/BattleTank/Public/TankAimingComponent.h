@@ -30,6 +30,8 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+
+
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 	void SetTurretReference(UTankTurret* TurretToSet);
 
@@ -42,6 +44,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		void Initialize(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet);
 
 public:	
 	// Called every frame
