@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Robert Hinds
 
 #include "Tank.h"
 #include "TankAimingComponent.h"
@@ -20,10 +20,6 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
-UTankBarrel* ATank::GetBarrelReference()
-{
-	return TankAimingComponent->GetBarrelReference();
-}
 
 void ATank::SetMyMoveComp(UTankMovementComponent * MyTankMovementComponent)
 {
@@ -57,10 +53,8 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-
 void ATank::AimAt(FVector HitLocation)
 {
-
 	TankAimingComponent->AimAtTarget(HitLocation, LaunchSpeed);	
 }
 
