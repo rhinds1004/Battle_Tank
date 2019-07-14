@@ -35,7 +35,7 @@ void ATank::SetMyAimComp(UTankAimingComponent * MyTankAimingComponent)
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
-	Super::BeginPlay();
+	Super::BeginPlay(); // Needed for BP begin Play to run!
 	verifyf(ProjectileBlueprint, TEXT("Projectile Blueprint Not Set!"))
 		
 }
