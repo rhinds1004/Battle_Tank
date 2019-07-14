@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
+#define OUTPARAM
 //Enum
 UENUM()
 enum class EFiringState : uint8

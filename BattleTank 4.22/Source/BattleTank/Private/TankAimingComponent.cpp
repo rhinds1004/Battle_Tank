@@ -64,7 +64,7 @@ void UTankAimingComponent::AimAtTarget(FVector HitLocation, float LaunchSpeed)
 	FVector OutLaunchVelocity(0);
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile")); // getsocketlocation will return the component location if socket isn't found
 //TODO do we not want to know what the projectile hit? If so using do not trace wont work. Set
-	bool SuggestProjectileVelocityResult = UGameplayStatics::SuggestProjectileVelocity(this, OUT OutLaunchVelocity, StartLocation, HitLocation,
+	bool SuggestProjectileVelocityResult = UGameplayStatics::SuggestProjectileVelocity(this, OUTPARAM OutLaunchVelocity, StartLocation, HitLocation,
 		LaunchSpeed, false, 0.f, 0.f, ESuggestProjVelocityTraceOption::DoNotTrace,
 		FCollisionResponseParams::DefaultResponseParam, ActorsToIgnore, false);
 	if (SuggestProjectileVelocityResult)
