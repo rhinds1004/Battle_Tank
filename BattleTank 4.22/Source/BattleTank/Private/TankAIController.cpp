@@ -3,6 +3,7 @@
 #include "TankAIController.h"
 #include "Engine/World.h"
 #include "Tank.h"
+#include "Runtime/Engine/Classes/GameFramework/Controller.h"
 
 
 
@@ -15,10 +16,15 @@ void ATankAIController::BeginPlay()
 void ATankAIController::Tick(float DeltaTime) 
 {
 	Super::Tick(DeltaTime);
+	ATank* PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+
+	if (ensure(PlayerTank))
+	{
 		//Move to player
-		MoveToActor(GetWorld()->GetFirstPlayerController()->GetPawn(), AcceptanceRadius); //check radius is in CM
+		MoveToActor(PlayerTank, AcceptanceRadius); //check radius is in CM
 		//Aim towards player	
-		ControlledTank->AimAt(GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation());
+		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 		//TODO only fire when barrel is pointed at player
-		ControlledTank->Fire();	
+		ControlledTank->Fire();
+	}
 }

@@ -10,7 +10,7 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	UTankAimingComponent* AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
-	if (AimingComponent)
+	if (ensure(AimingComponent))
 	{
 		FoundAimingComponent(AimingComponent);
 	}
@@ -38,12 +38,11 @@ ATank* ATankPlayerController::GetControlledTank() const
 //the crosshair intersects the world
 void ATankPlayerController::AimTowardCrosshair()
 {
-	if (!GetControlledTank()) { return; }
+	if (!ensure(GetControlledTank())) { return; }
 	FVector HitLocation;//Out parameter
 	if (GetSightRayHitLocation(HitLocation)) //Has "side-effect", is going to ray trace 
 	{
-		GetControlledTank()->AimAt(HitLocation);
-					
+		GetControlledTank()->AimAt(HitLocation);				
 	}
 }
 
@@ -54,7 +53,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	//Find the crosshair position in pixel coorinates
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
-	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
+	FVector2D ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
 
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
@@ -67,7 +66,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 //"De-project" 2D crosshair screen location to a Out 3D world direction unit vector 
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& OutLookDirection) const
 {
-	FVector CameraWorldLocation; //not used
+	FVector CameraWorldLocation; //not used, just needed to call the DeprojectScreenPositionToWorld function
 
 	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, OutLookDirection);
 
@@ -77,16 +76,14 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const
 {
 	FHitResult HitResult;
-	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	FVector StartLocation = PlayerCameraManager->GetCameraLocation();
 	FCollisionParameters Params;
 	
 	//could also use GetHitResultAtScreenPosition if input param is changed to 2d
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, StartLocation + LookDirection * LineTraceRange, ECollisionChannel::ECC_Visibility))
 	{
-		
 			OutHitLocation = HitResult.ImpactPoint;
-			return true;
-		
+			return true;	
 	}
 	OutHitLocation = FVector(0);
 	return false;

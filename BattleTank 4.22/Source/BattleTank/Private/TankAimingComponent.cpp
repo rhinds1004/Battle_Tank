@@ -21,11 +21,9 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret * TurretToSet)
 {
-	if (ensure(BarrelToSet) && ensure(TurretToSet))
-	{
+	if (!ensure(BarrelToSet && TurretToSet)) { return; }
 		Barrel = BarrelToSet;
 		Turret = TurretToSet;
-	}
 
 	//TODO REmove this workaround. Needed because the reference to the tank movement component is getting nulled in the tank class after this function returns. Need to find out why.
 	ATank* OwnerTank = Cast<ATank>(GetOwner());
@@ -58,9 +56,9 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 //Currently set to do no trace. Maybe tracefull path better option. use the params to get what was hit and use that for damage?
 void UTankAimingComponent::AimAtTarget(FVector HitLocation, float LaunchSpeed)
 {
-	if (!Barrel) { return; }
+	if (!ensure(Barrel)) { return; }
 	
-	TArray<AActor *>ActorsToIgnore;
+	TArray<AActor*>ActorsToIgnore;
 	FVector OutLaunchVelocity(0);
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile")); // getsocketlocation will return the component location if socket isn't found
 //TODO do we not want to know what the projectile hit? If so using do not trace wont work. Set
@@ -84,22 +82,21 @@ void UTankAimingComponent::AimAtTarget(FVector HitLocation, float LaunchSpeed)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	if (ensure(Barrel))
-	{
-		FRotator BarrelRotation = Barrel->GetForwardVector().ToOrientationRotator();
-		FRotator AimAsRotator = AimDirection.ToOrientationRotator();
-		FRotator DeltaRotator = AimAsRotator - BarrelRotation;
-		Barrel->ElevateBarrel(DeltaRotator.Pitch);
-	}
+	if (!ensure(Barrel)) { return; }
+
+	FRotator BarrelRotation = Barrel->GetForwardVector().ToOrientationRotator();
+	FRotator AimAsRotator = AimDirection.ToOrientationRotator();
+	FRotator DeltaRotator = AimAsRotator - BarrelRotation;
+	Barrel->ElevateBarrel(DeltaRotator.Pitch);
+
 }
 
 void UTankAimingComponent::MoveTurretTowrds(FVector AimDirection)
 {
-	if (ensure(Turret))
-	{
-		FRotator TurretRotation = Turret->GetForwardVector().ToOrientationRotator();
-		FRotator AimAsRotator = AimDirection.ToOrientationRotator();
-		FRotator DeltaRotator = AimAsRotator - TurretRotation;
-		Turret->RotateTurret(DeltaRotator.Yaw);
-	}
+	if (!ensure(Turret)) { return; }
+
+	FRotator TurretRotation = Turret->GetForwardVector().ToOrientationRotator();
+	FRotator AimAsRotator = AimDirection.ToOrientationRotator();
+	FRotator DeltaRotator = AimAsRotator - TurretRotation;
+	Turret->RotateTurret(DeltaRotator.Yaw);
 }

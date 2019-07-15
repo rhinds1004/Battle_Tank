@@ -23,11 +23,13 @@ ATank::ATank()
 
 void ATank::SetMyMoveComp(UTankMovementComponent * MyTankMovementComponent)
 {
+	if (!ensure(MyTankMovementComponent)) { return;  }
 	this->TankMovementComponent = MyTankMovementComponent;
 }
 
 void ATank::SetMyAimComp(UTankAimingComponent * MyTankAimingComponent)
 {
+	if (!ensure(MyTankAimingComponent)) { return; }
 	this->TankAimingComponent = MyTankAimingComponent;
 }
 
@@ -37,7 +39,6 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed for BP begin Play to run!
 	verifyf(ProjectileBlueprint, TEXT("Projectile Blueprint Not Set!"))
-		
 }
 
 
@@ -64,10 +65,12 @@ void ATank::AimAt(FVector HitLocation)
 //Fires a projectile if it has been X number of seconds from the last time a projectile was actually launched.
 void ATank::Fire()
 {
-	bool IsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
 	UTankBarrel* Barrel = TankAimingComponent->GetBarrelReference();
-	
-	if (Barrel && IsReloaded)
+	if (!ensure(Barrel)) { return; }
+
+	bool IsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
+
+	if (IsReloaded)
 	{
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
 			Barrel->GetSocketLocation(FName("Projectile")),
@@ -79,21 +82,29 @@ void ATank::Fire()
 
 void ATank::MoveForward(float amt)
 {	
+	if (!ensure(TankMovementComponent)) { return; }
+
 	TankMovementComponent->IntendMoveForward(amt);
 }
 
 void ATank::MoveRight(float amt)
 {
+	if (!ensure(TankMovementComponent)) { return; }
+
 	TankMovementComponent->IntendMoveRight(amt);
 }
 
 
 void ATank::SetLeftThrottle(float amt)
 {
+	if (!ensure(TankMovementComponent)) { return; }
+
 	TankMovementComponent->GetLeftTrack()->SetThrottle(amt);
 }
 
 void ATank::SetRightThrottle(float amt)
 {
+	if (!ensure(TankMovementComponent)) { return; }
+
 	TankMovementComponent->GetRightTrack()->SetThrottle(amt);
 }
