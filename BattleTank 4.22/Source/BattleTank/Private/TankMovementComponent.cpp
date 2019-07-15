@@ -31,14 +31,14 @@ void UTankMovementComponent::IntendMoveRight(float Throw)
 }
 
 
-UTankTrack * UTankMovementComponent::GetLeftTrack()
+void UTankMovementComponent::SetLeftTrackThrottle(float Throw)
 {
-	return LeftTrack;
+	LeftTrack->SetThrottle(Throw);
 }
 
-UTankTrack * UTankMovementComponent::GetRightTrack()
+void UTankMovementComponent::SetRightTrackThrottle(float Throw)
 {
-	return RightTrack;
+	RightTrack->SetThrottle(Throw);
 }
 
 void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed)

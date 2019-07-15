@@ -5,7 +5,7 @@
 #include "Tank.h"
 #include "Runtime/Engine/Classes/GameFramework/Controller.h"
 
-
+//Depends on movement component via pathfinding system
 
 void ATankAIController::BeginPlay()
 {
@@ -21,7 +21,7 @@ void ATankAIController::Tick(float DeltaTime)
 	if (ensure(PlayerTank))
 	{
 		//Move to player
-		MoveToActor(PlayerTank, AcceptanceRadius); //check radius is in CM
+		MoveToActor(PlayerTank, AcceptanceRadius); //check radius is in CM comes from Unreal Engines's AI pathfinding which is accessible due to inheriting from AI Controller
 		//Aim towards player	
 		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 		//TODO only fire when barrel is pointed at player

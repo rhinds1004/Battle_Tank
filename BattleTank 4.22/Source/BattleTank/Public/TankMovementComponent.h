@@ -29,12 +29,11 @@ public:
 	UFUNCTION(BlueprintCallable, category = "Input")
 	void IntendMoveRight(float Throw);
 	
-	UFUNCTION()
-	UTankTrack* GetLeftTrack();
+	UFUNCTION(BlueprintCallable, category = "Input")
+	void SetLeftTrackThrottle(float Throw);
 
-	UFUNCTION()
-	UTankTrack* GetRightTrack();
-
+	UFUNCTION(BlueprintCallable, category = "Input")
+	void SetRightTrackThrottle(float Throw);
 
 private:
 	UTankTrack* LeftTrack = nullptr;

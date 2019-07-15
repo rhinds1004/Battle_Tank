@@ -3,11 +3,9 @@
 #include "Tank.h"
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
-#include "TankTurret.h"
 #include "Components/InputComponent.h"
 #include "Engine/World.h"
 #include "Projectile.h"
-#include "TankTrack.h"
 #include "TankMovementComponent.h"
 
 
@@ -99,12 +97,12 @@ void ATank::SetLeftThrottle(float amt)
 {
 	if (!ensure(TankMovementComponent)) { return; }
 
-	TankMovementComponent->GetLeftTrack()->SetThrottle(amt);
+	TankMovementComponent->SetLeftTrackThrottle(amt);
 }
 
 void ATank::SetRightThrottle(float amt)
 {
 	if (!ensure(TankMovementComponent)) { return; }
 
-	TankMovementComponent->GetRightTrack()->SetThrottle(amt);
+	TankMovementComponent->SetRightTrackThrottle(amt);
 }
