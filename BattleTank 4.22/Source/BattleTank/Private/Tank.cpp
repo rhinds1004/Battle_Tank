@@ -42,6 +42,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::AimAt(FVector HitLocation)
 {
+	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimAtTarget(HitLocation, LaunchSpeed);	
 }
 
@@ -51,6 +52,7 @@ void ATank::AimAt(FVector HitLocation)
 //Fires a projectile if it has been X number of seconds from the last time a projectile was actually launched.
 void ATank::Fire()
 {
+	if (!ensure(TankAimingComponent)) { return; }
 	UTankBarrel* Barrel = TankAimingComponent->GetBarrelReference();
 	if (!ensure(Barrel)) { return; }
 
