@@ -7,7 +7,7 @@
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "Engine/World.h"
-#include "Tank.h"
+
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()

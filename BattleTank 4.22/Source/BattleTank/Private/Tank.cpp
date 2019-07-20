@@ -23,7 +23,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed for BP begin Play to run!
 	verifyf(ProjectileBlueprint, TEXT("Projectile Blueprint Not Set!"))
-		TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	TankMovementComponent = FindComponentByClass<UTankMovementComponent>();
 }
 
