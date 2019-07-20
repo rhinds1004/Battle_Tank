@@ -35,6 +35,9 @@ public:
 	UFUNCTION(BlueprintCallable, category = "Input")
 	void SetRightTrackThrottle(float Throw);
 
+protected:
+	virtual void BeginPlay() override;
+
 private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;

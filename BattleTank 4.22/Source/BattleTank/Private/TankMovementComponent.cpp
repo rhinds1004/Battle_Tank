@@ -3,6 +3,11 @@
 #include "TankMovementComponent.h"
 #include "TankTrack.h"
 
+void UTankMovementComponent::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet)
 {
 	if (!ensure(LeftTrackToSet && RightTrackToSet)) { return; }
