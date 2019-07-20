@@ -24,10 +24,6 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret * Tu
 	if (!ensure(BarrelToSet && TurretToSet)) { return; }
 		Barrel = BarrelToSet;
 		Turret = TurretToSet;
-
-	//TODO REmove this workaround. Needed because the reference to the tank movement component is getting nulled in the tank class after this function returns. Need to find out why.
-	ATank* OwnerTank = Cast<ATank>(GetOwner());
-	OwnerTank->SetMyAimComp(this);
 }
 
 UTankBarrel* UTankAimingComponent::GetBarrelReference()

@@ -18,25 +18,13 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
-
-void ATank::SetMyMoveComp(UTankMovementComponent * MyTankMovementComponent)
-{
-	if (!ensure(MyTankMovementComponent)) { return;  }
-	this->TankMovementComponent = MyTankMovementComponent;
-}
-
-void ATank::SetMyAimComp(UTankAimingComponent * MyTankAimingComponent)
-{
-	if (!ensure(MyTankAimingComponent)) { return; }
-	this->TankAimingComponent = MyTankAimingComponent;
-}
-
-
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed for BP begin Play to run!
 	verifyf(ProjectileBlueprint, TEXT("Projectile Blueprint Not Set!"))
+		TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+	TankMovementComponent = FindComponentByClass<UTankMovementComponent>();
 }
 
 

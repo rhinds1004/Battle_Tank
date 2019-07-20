@@ -40,15 +40,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 		void SetRightThrottle(float amt);
 
-	//WorkArounds Needed as blueprint spawned component references are getting set to null after there initialize function is compeleted.
-
-	UFUNCTION()
-		void SetMyMoveComp(UTankMovementComponent* MyTankMovementComponent);
-
-	UFUNCTION()
-	void SetMyAimComp(UTankAimingComponent* MyTankAimingComponent);
-
-
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Setup")
 	UTankAimingComponent* TankAimingComponent = nullptr;

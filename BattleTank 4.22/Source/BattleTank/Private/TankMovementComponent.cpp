@@ -9,10 +9,6 @@ void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* 
 	if (!ensure(LeftTrackToSet && RightTrackToSet)) { return; }
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
-	
-	//TODO REmove this workaround. Needed because the reference to the tank movement component is getting nulled in the tank class after this function returns. Need to find out why.
-	ATank* OwnerTank = Cast<ATank>(GetOwner());
-	OwnerTank->SetMyMoveComp(this);	
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
