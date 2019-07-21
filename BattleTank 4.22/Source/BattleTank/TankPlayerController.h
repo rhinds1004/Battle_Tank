@@ -42,7 +42,13 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 		void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
+		UTankAimingComponent* AimingComponent = nullptr;
+
 private:
+
+
+
 	//Start the tank moving the barrel so that a shot would hit where
 	//the crosshair intersects the world
 	void AimTowardCrosshair();

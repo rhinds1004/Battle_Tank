@@ -23,7 +23,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed for BP begin Play to run!
 	verifyf(ProjectileBlueprint, TEXT("Projectile Blueprint Not Set!"))
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+	//TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	TankMovementComponent = FindComponentByClass<UTankMovementComponent>();
 }
 
@@ -38,12 +38,6 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("Left Track Throttle", this, &ATank::SetLeftThrottle);
 	PlayerInputComponent->BindAxis("Right Track Throttle", this, &ATank::SetRightThrottle);
 
-}
-
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!ensure(TankAimingComponent)) { return; }
-	TankAimingComponent->AimAtTarget(HitLocation, LaunchSpeed);	
 }
 
 ///NOTE: the fact the projectile's location and rotation are set to the socket's

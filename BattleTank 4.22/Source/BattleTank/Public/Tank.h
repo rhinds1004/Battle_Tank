@@ -23,9 +23,6 @@ class BATTLETANK_API ATank : public APawn
 public:
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-	void AimAt(FVector HitLocation);
-
-	UFUNCTION(BlueprintCallable, Category = "Firing")
 		void Fire();
 
 	UFUNCTION()
@@ -39,10 +36,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
 		void SetRightThrottle(float amt);
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
+		UTankAimingComponent* TankAimingComponent = nullptr;
+
 
 protected:
-	UPROPERTY(BlueprintReadOnly, Category = "Setup")
-	UTankAimingComponent* TankAimingComponent = nullptr;
+
 
 	UPROPERTY(BlueprintReadOnly, Category = "Setup")
 		UTankMovementComponent* TankMovementComponent = nullptr;

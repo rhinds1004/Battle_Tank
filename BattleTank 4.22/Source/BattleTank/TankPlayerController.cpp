@@ -9,8 +9,9 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	UTankAimingComponent* AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
+
 	FoundAimingComponent(AimingComponent);
 }
 
@@ -31,11 +32,11 @@ ATank* ATankPlayerController::GetControlledTank() const
 //the crosshair intersects the world
 void ATankPlayerController::AimTowardCrosshair()
 {
-	if (!ensure(GetControlledTank())) { return; }
+	if (!ensure(AimingComponent)) { return; }
 	FVector HitLocation;//Out parameter
 	if (GetSightRayHitLocation(HitLocation)) //Has "side-effect", is going to ray trace 
 	{
-		GetControlledTank()->AimAt(HitLocation);				
+		AimingComponent->AimAtTarget(HitLocation, AimingComponent->ProjectileLaunchSpeed);
 	}
 }
 

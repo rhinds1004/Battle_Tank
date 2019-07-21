@@ -8,6 +8,8 @@
 #include "TankAIController.generated.h"
 
 class ATank;
+class UTankAimingComponent;
+
 /**
  * 
  */
@@ -26,6 +28,10 @@ private:
 	//How close ai tank can get to target
 	UPROPERTY()
 	float AcceptanceRadius = 3000.f;
+
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
+	UTankAimingComponent* AimingComponent = nullptr;
 
 public:
 	virtual void BeginPlay() override;

@@ -49,6 +49,8 @@ public:
 
 	void AimAtTarget(FVector HitLocation, float LaunchSpeed);
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float ProjectileLaunchSpeed = 7000;
 
 
 private:
