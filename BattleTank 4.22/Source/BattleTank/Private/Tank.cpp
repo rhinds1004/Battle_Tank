@@ -1,6 +1,8 @@
 // Copyright Robert Hinds
 
 #include "Tank.h"
+#include "TankAimingComponent.h"
+#include "TankBarrel.h"
 #include "Components/InputComponent.h"
 #include "Engine/World.h"
 #include "TankMovementComponent.h"
