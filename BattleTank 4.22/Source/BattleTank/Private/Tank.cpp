@@ -23,7 +23,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed for BP begin Play to run!
 	verifyf(ProjectileBlueprint, TEXT("Projectile Blueprint Not Set!"))
-	//TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	TankMovementComponent = FindComponentByClass<UTankMovementComponent>();
 }
 
@@ -32,7 +32,7 @@ void ATank::BeginPlay()
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ATank::Fire);
+	//PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ATank::Fire);
 	PlayerInputComponent->BindAxis("Move Forward", this, &ATank::MoveForward);
 	PlayerInputComponent->BindAxis("Move Right", this, &ATank::MoveRight);
 	PlayerInputComponent->BindAxis("Left Track Throttle", this, &ATank::SetLeftThrottle);

@@ -9,7 +9,6 @@
 #define OUTPARAM
 
 //Forward Declarations
-class ATank;
 class UTankAimingComponent;
 
 /**
@@ -35,8 +34,6 @@ public:
 		float LineTraceRange = 1000000;
 
 protected:
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-		ATank* GetControlledTank() const;
 
 	//Fires an Event in derived blueprint that controls if the player UI is added to the viewport
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
