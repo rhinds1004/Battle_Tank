@@ -22,6 +22,9 @@ class BATTLETANK_API ATank : public APawn
 
 public:
 
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+		void Fire();
+
 	UFUNCTION()
 	void MoveForward(float amt);
 
@@ -33,7 +36,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
 		void SetRightThrottle(float amt);
-
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
+		UTankAimingComponent* TankAimingComponent = nullptr;
 
 
 protected:
@@ -56,9 +60,13 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float LaunchSpeed = 7000; 
 	
-
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		TSubclassOf<class AProjectile> ProjectileBlueprint;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float ReloadTimeInSeconds = 3.f;
 
+	double LastFireTime = 0;
 
 	
 

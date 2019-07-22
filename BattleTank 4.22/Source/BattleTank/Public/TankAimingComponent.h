@@ -43,9 +43,6 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void Initialize(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet);
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		TSubclassOf<class AProjectile> ProjectileBlueprint;
-
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -55,8 +52,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float ProjectileLaunchSpeed = 7000;
 
-	UFUNCTION(BlueprintCallable, Category = "Firing")
-	void Fire();
 
 private:
 	UPROPERTY()
@@ -64,17 +59,11 @@ private:
 	UPROPERTY()
 		UTankTurret* Turret = nullptr;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float ReloadTimeInSeconds = 3.f;
-
-	double LastFireTime = 0;
 
 
 	void MoveBarrelTowards(FVector AimDirection);
 
 	void MoveTurretTowrds(FVector AimDirection);
-
-
 	
 
 	
