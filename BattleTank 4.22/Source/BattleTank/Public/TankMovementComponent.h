@@ -36,7 +36,6 @@ public:
 	void SetRightTrackThrottle(float Throw);
 
 protected:
-	UTankMovementComponent();
 	virtual void BeginPlay() override;
 
 private:
