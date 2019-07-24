@@ -6,10 +6,9 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-//Forward Declarations
-class UTankTrack;
-class UTankMovementComponent;
-
+/*
+*
+*/
 
 
 UCLASS()
@@ -19,26 +18,7 @@ class BATTLETANK_API ATank : public APawn
 
 public:
 
-	UFUNCTION()
-	void MoveForward(float amt);
-
-	UFUNCTION()
-	void MoveRight(float amt);
-
-	UFUNCTION(BlueprintCallable, Category = "Input")
-	void SetLeftThrottle(float amt);
-
-	UFUNCTION(BlueprintCallable, Category = "Input")
-		void SetRightThrottle(float amt);
-
-
-
 protected:
-
-
-	UPROPERTY(BlueprintReadOnly, Category = "Setup")
-		UTankMovementComponent* TankMovementComponent = nullptr;
-
 
 private:
 	// Sets default values for this pawn's properties
@@ -49,12 +29,5 @@ private:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	
-
-	
-
-
-	
 
 };
