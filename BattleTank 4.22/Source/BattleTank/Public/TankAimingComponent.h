@@ -33,12 +33,13 @@ public:
 
 
 
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Reloading;
+		EFiringState FiringState = EFiringState::Reloading;
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void Initialize(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet);
@@ -75,9 +76,9 @@ private:
 
 	FVector AimDirection = FVector(0);
 
-	void MoveBarrelTowards(FVector AimDirection);
+	void MoveBarrelTowards(FVector DirectionToAim);
 
-	void MoveTurretTowrds(FVector AimDirection);
+	void MoveTurretTowrds(FVector DirectionToAim);
 
 
 	

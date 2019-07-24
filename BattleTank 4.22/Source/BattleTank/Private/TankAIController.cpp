@@ -28,6 +28,9 @@ void ATankAIController::Tick(float DeltaTime)
 		//Aim towards player	
 		AimingComponent->AimAtTarget(PlayerTank->GetActorLocation(), AimingComponent->ProjectileLaunchSpeed);
 		//TODO only fire when barrel is pointed at player
-		AimingComponent->Fire();
+
+			AimingComponent->Fire();
+
+		
 	
 }

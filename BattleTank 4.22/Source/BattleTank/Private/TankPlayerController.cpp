@@ -25,6 +25,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 //the crosshair intersects the world
 void ATankPlayerController::AimTowardCrosshair()
 {
+	if(!GetPawn()) {return;} //In the case nothing is possesed.
 	if (!ensure(AimingComponent)) { return; }
 	FVector HitLocation;//Out parameter
 	if (GetSightRayHitLocation(HitLocation)) //Has "side-effect", is going to ray trace 

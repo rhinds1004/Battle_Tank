@@ -85,23 +85,23 @@ void UTankAimingComponent::AimAtTarget(FVector HitLocation, float LaunchSpeed)
 
 }
 
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+void UTankAimingComponent::MoveBarrelTowards(FVector DirectionToAim)
 {
 	if (!ensure(Barrel)) { return; }
 
 	FRotator BarrelRotation = Barrel->GetForwardVector().ToOrientationRotator();
-	FRotator AimAsRotator = AimDirection.ToOrientationRotator();
+	FRotator AimAsRotator = DirectionToAim.ToOrientationRotator();
 	FRotator DeltaRotator = AimAsRotator - BarrelRotation;
 	Barrel->ElevateBarrel(DeltaRotator.Pitch);
 
 }
 
-void UTankAimingComponent::MoveTurretTowrds(FVector AimDirection)
+void UTankAimingComponent::MoveTurretTowrds(FVector DirectionToAim)
 {
 	if (!ensure(Turret)) { return; }
 
 	FRotator TurretRotation = Turret->GetForwardVector().ToOrientationRotator();
-	FRotator AimAsRotator = AimDirection.ToOrientationRotator();
+	FRotator AimAsRotator = DirectionToAim.ToOrientationRotator();
 	FRotator DeltaRotator = AimAsRotator - TurretRotation;
 	Turret->RotateTurret(DeltaRotator.Yaw);
 }
