@@ -27,11 +27,6 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret * Tu
 		Turret = TurretToSet;
 }
 
-UTankBarrel* UTankAimingComponent::GetBarrelReference()
-{
-	return Barrel;
-}
-
 // Called when the game starts
 void UTankAimingComponent::BeginPlay()
 {

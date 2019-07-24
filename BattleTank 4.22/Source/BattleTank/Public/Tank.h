@@ -7,9 +7,6 @@
 #include "Tank.generated.h"
 
 //Forward Declarations
-class UTankBarrel;
-class UTankTurret;
-class UTankAimingComponent;
 class UTankTrack;
 class UTankMovementComponent;
 
@@ -53,8 +50,6 @@ private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float LaunchSpeed = 7000; 
 	
 
 	

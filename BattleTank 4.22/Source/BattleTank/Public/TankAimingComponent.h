@@ -30,7 +30,7 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
-	UTankBarrel* GetBarrelReference();
+
 
 
 protected:
@@ -45,6 +45,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		TSubclassOf<class AProjectile> ProjectileBlueprint;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float ReloadTimeInSeconds = 3.f;
 
 public:	
 	// Called every frame
@@ -63,9 +66,6 @@ private:
 		UTankBarrel* Barrel = nullptr;
 	UPROPERTY()
 		UTankTurret* Turret = nullptr;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float ReloadTimeInSeconds = 3.f;
 
 	double LastFireTime = 0;
 
