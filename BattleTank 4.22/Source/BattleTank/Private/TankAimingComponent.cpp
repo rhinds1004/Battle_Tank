@@ -137,6 +137,6 @@ bool UTankAimingComponent::IsBarrelMoving()
 {
 	if (!ensure(Barrel)) { return false; }	
 
-	FVector BarrelForwardVector = Barrel->GetForwardVector();
+	FVector BarrelForwardVector = Barrel->GetForwardVector().GetSafeNormal();
 	return !BarrelForwardVector.Equals(AimDirection, .01f);
 }
