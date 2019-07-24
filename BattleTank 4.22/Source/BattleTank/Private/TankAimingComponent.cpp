@@ -7,6 +7,7 @@
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "Engine/World.h"
+#include "Projectile.h"
 
 
 // Sets default values for this component's properties
@@ -95,4 +96,30 @@ void UTankAimingComponent::MoveTurretTowrds(FVector AimDirection)
 	FRotator AimAsRotator = AimDirection.ToOrientationRotator();
 	FRotator DeltaRotator = AimAsRotator - TurretRotation;
 	Turret->RotateTurret(DeltaRotator.Yaw);
+}
+
+
+
+///NOTE: the fact the projectile's location and rotation are set to the socket's
+/// is used by the LaunchProjectile function of the Projectile class. 
+/// it is assumed that the projectile is facing the correct direction when LaunchProjectile function is called.
+//Fires a projectile if it has been X number of seconds from the last time a projectile was actually launched.
+void UTankAimingComponent::Fire()
+{
+
+	if (!ensure(this->Barrel)) { return; }
+
+	if (!ensure(ProjectileBlueprint)) { return; }
+
+	bool IsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
+
+	if (IsReloaded)
+	{
+		
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile")));
+		Projectile->LaunchProjectile(ProjectileLaunchSpeed);
+		LastFireTime = GetWorld()->GetTimeSeconds();
+	}
 }
