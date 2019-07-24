@@ -38,7 +38,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Aiming;
+	EFiringState FiringState = EFiringState::Reloading;
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void Initialize(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet);
@@ -61,6 +61,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
+	UFUNCTION()
+	bool IsBarrelMoving();
+
 private:
 	UPROPERTY()
 		UTankBarrel* Barrel = nullptr;
@@ -69,6 +72,8 @@ private:
 
 	double LastFireTime = 0;
 
+
+	FVector AimDirection = FVector(0);
 
 	void MoveBarrelTowards(FVector AimDirection);
 

@@ -15,8 +15,8 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false; 
-
+	PrimaryComponentTick.bCanEverTick = true; 
+	
 	// ...
 }
 
@@ -31,7 +31,9 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret * Tu
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
+	//TODO make it so ai tank only fires after reload
+	//Prevents tanks from firing right at spawn 
+	LastFireTime = GetWorld()->GetTimeSeconds();
 	// ...
 	
 }
@@ -41,8 +43,19 @@ void UTankAimingComponent::BeginPlay()
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
 	// ...
+	if ((GetWorld()->GetTimeSeconds() - LastFireTime) < ReloadTimeInSeconds)
+	{
+		FiringState = EFiringState::Reloading;
+	}
+	else if(IsBarrelMoving())
+	{
+		FiringState = EFiringState::Aiming;
+	}
+	else
+	{
+		FiringState = EFiringState::Locked;
+	}
 }
 
 //Currently set to do no trace. Maybe tracefull path better option. use the params to get what was hit and use that for damage?
@@ -59,7 +72,7 @@ void UTankAimingComponent::AimAtTarget(FVector HitLocation, float LaunchSpeed)
 		FCollisionResponseParams::DefaultResponseParam, ActorsToIgnore, false);
 	if (SuggestProjectileVelocityResult)
 	{
-		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
+		AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
 		MoveTurretTowrds(AimDirection);
 			
@@ -106,9 +119,9 @@ void UTankAimingComponent::Fire()
 
 	if (!ensure(ProjectileBlueprint)) { return; }
 
-	bool IsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	if (IsReloaded)
+
+	if (FiringState != EFiringState::Reloading)
 	{
 		
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
@@ -117,4 +130,13 @@ void UTankAimingComponent::Fire()
 		Projectile->LaunchProjectile(ProjectileLaunchSpeed);
 		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
+}
+
+//Returns false when barrel is pointing "directly" at the UI recticule 
+bool UTankAimingComponent::IsBarrelMoving()
+{
+	if (!ensure(Barrel)) { return false; }	
+
+	FVector BarrelForwardVector = Barrel->GetForwardVector();
+	return !BarrelForwardVector.Equals(AimDirection, .01f);
 }
