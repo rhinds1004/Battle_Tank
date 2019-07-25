@@ -2,7 +2,18 @@
 
 #include "TankTrack.h"
 
+UTankTrack::UTankTrack()
+{
+	PrimaryComponentTick.bCanEverTick = true;
+}
 
+
+
+void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+}
 
 void UTankTrack::SetThrottle(float ThrottleAmt)
 {
