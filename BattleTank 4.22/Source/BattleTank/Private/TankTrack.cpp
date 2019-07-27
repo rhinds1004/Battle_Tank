@@ -20,7 +20,7 @@ void UTankTrack::BeginPlay()
 
 void UTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("I am hit, I am hit"))
+	//UE_LOG(LogTemp, Warning, TEXT("I am hit, I am hit"))
 }
 
 void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
@@ -43,10 +43,12 @@ void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 void UTankTrack::SetThrottle(float ThrottleAmt)
 {
 	//ThrottleAmt = FMath::Clamp<float>(ThrottleAmt, -1.f, 1.f);
+	UE_LOG(LogTemp, Warning, TEXT("%s : %f"), *GetName(), ThrottleAmt)
 	FVector ForceApplied = ThrottleAmt * TrackMaxDriveForce * GetForwardVector();
 	FVector ForceLocation = GetComponentLocation();
 
 	UPrimitiveComponent* TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);	
+	UE_LOG(LogTemp, Warning, TEXT("%s : %s"), *GetName(), *ForceApplied.ToCompactString())
 }
