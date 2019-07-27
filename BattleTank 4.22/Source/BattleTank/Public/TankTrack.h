@@ -27,9 +27,9 @@ private:
 
 public:
 
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 	virtual void BeginPlay() override;
+
+	void ApplySidewaysForce();
 
 	UFUNCTION(BlueprintCallable, category = "Input")
 	void SetThrottle(float ThrottleAmt);
