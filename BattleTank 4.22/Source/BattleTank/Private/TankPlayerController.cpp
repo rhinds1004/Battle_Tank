@@ -28,7 +28,9 @@ void ATankPlayerController::AimTowardCrosshair()
 	if(!GetPawn()) {return;} //In the case nothing is possesed.
 	if (!ensure(AimingComponent)) { return; }
 	FVector HitLocation;//Out parameter
-	if (GetSightRayHitLocation(HitLocation)) //Has "side-effect", is going to ray trace 
+	bool IsAHitLocation = GetSightRayHitLocation(HitLocation);
+	UE_LOG(LogTemp, Warning, TEXT("Got a hit location: %i"), IsAHitLocation);
+	if (IsAHitLocation) //Has "side-effect", is going to ray trace 
 	{
 		AimingComponent->AimAtTarget(HitLocation, AimingComponent->ProjectileLaunchSpeed);
 	}
@@ -46,9 +48,9 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-		GetLookVectorHitLocation(LookDirection, OutHitLocation);	
+		return GetLookVectorHitLocation(LookDirection, OutHitLocation);	
 	}
-	return true;
+	return false;
 }
 
 //"De-project" 2D crosshair screen location to a Out 3D world direction unit vector 

@@ -91,10 +91,11 @@ void UTankAimingComponent::MoveBarrelTowards(FVector DirectionToAim)
 
 	FRotator BarrelRotation = Barrel->GetForwardVector().ToOrientationRotator();
 	FRotator AimAsRotator = DirectionToAim.ToOrientationRotator();
-	FRotator DeltaRotator = AimAsRotator - BarrelRotation;
-	Barrel->ElevateBarrel(DeltaRotator.Pitch);
+	FRotator DeltaRotator = (AimAsRotator - BarrelRotation);
+	Barrel->ElevateBarrel(DeltaRotator.GetNormalized().Pitch); // GetNormalized: "Create a copy of this rotator and normalize, removes all winding and creates the "shortest route" rotation."
 
 }
+
 
 void UTankAimingComponent::MoveTurretTowrds(FVector DirectionToAim)
 {
@@ -103,7 +104,7 @@ void UTankAimingComponent::MoveTurretTowrds(FVector DirectionToAim)
 	FRotator TurretRotation = Turret->GetForwardVector().ToOrientationRotator();
 	FRotator AimAsRotator = DirectionToAim.ToOrientationRotator();
 	FRotator DeltaRotator = AimAsRotator - TurretRotation;
-	Turret->RotateTurret(DeltaRotator.Yaw);
+	Turret->RotateTurret(DeltaRotator.GetNormalized().Yaw); // GetNormalized: "Create a copy of this rotator and normalize, removes all winding and creates the "shortest route" rotation."
 }
 
 
