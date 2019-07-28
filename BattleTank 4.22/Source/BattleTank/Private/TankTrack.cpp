@@ -22,7 +22,9 @@ void UTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, 
 	UE_LOG(LogTemp, Warning, TEXT("%s: I am hit"), *GetName())
 		//Drive the tracks
 		//Apply sideways force
+		DriveTrack();
 		ApplySidewaysForce();
+		CurrentThrottle = 0;
 }
 
 void UTankTrack::ApplySidewaysForce()
@@ -39,14 +41,24 @@ void UTankTrack::ApplySidewaysForce()
 	TankRoot->AddForceAtLocation(CorrectionForce, GetComponentLocation());
 }
 
+
+//TODO refactor this to drivetrack (maybe different name if tank blueprint is still messed up) function and call new function from OnHit.
+//TODO make member variable to hold throttle and use that in the yet to be implemented function.  as in lecture 235.
 void UTankTrack::SetThrottle(float ThrottleAmt)
 {
-	//ThrottleAmt = FMath::Clamp<float>(ThrottleAmt, -1.f, 1.f);
-	FVector ForceApplied = ThrottleAmt * TrackMaxDriveForce * GetForwardVector();
+	
+	//CurrentThrottle = ThrottleAmt;
+	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + ThrottleAmt, -1.f, 1.f);
+	
+}
+
+
+void UTankTrack::DriveTrack()
+{
+	FVector ForceApplied = CurrentThrottle * TrackMaxDriveForce * GetForwardVector();
 	FVector ForceLocation = GetComponentLocation();
 
 	UPrimitiveComponent* TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 
-	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);	
-	
+	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 }
