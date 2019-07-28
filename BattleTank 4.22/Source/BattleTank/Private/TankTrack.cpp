@@ -39,12 +39,9 @@ void UTankTrack::ApplySidewaysForce()
 }
 
 
-//TODO refactor this to drivetrack (maybe different name if tank blueprint is still messed up) function and call new function from OnHit.
-//TODO make member variable to hold throttle and use that in the yet to be implemented function.  as in lecture 235.
 void UTankTrack::SetThrottle(float ThrottleAmt)
 {
 	
-	//CurrentThrottle = ThrottleAmt;
 	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + ThrottleAmt, -1.f, 1.f);
 	
 }

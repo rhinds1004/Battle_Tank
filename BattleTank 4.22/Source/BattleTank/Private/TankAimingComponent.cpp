@@ -31,7 +31,6 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret * Tu
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	//TODO make it so ai tank only fires after reload
 	//Prevents tanks from firing right at spawn 
 	LastFireTime = GetWorld()->GetTimeSeconds();
 	// ...

@@ -50,6 +50,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	{
 		return GetLookVectorHitLocation(LookDirection, OutHitLocation);	
 	}
+	//TODO The turret doesn't move when crosshair is on the sky. needs to fix this.
 	return false;
 }
 
