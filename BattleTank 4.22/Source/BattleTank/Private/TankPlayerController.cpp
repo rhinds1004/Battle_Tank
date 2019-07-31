@@ -48,8 +48,11 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *LookDirection.ToCompactString())
 		return GetLookVectorHitLocation(LookDirection, OutHitLocation);	
 	}
+
+
 	//TODO The turret doesn't move when crosshair is on the sky. needs to fix this.
 	return false;
 }
@@ -59,7 +62,7 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 {
 	FVector CameraWorldLocation; //not used, just needed to call the DeprojectScreenPositionToWorld function
 
-	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, OutLookDirection);
+	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, OUTPARAM OutLookDirection);
 
 }
 

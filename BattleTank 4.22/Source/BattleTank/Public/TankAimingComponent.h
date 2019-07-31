@@ -65,6 +65,8 @@ public:
 	UFUNCTION()
 	bool IsBarrelMoving();
 
+	EFiringState GetFiringState() const;
+
 private:
 	UPROPERTY()
 		UTankBarrel* Barrel = nullptr;
