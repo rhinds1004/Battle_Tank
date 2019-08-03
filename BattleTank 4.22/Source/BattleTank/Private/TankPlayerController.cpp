@@ -29,7 +29,7 @@ void ATankPlayerController::AimTowardCrosshair()
 	if (!ensure(AimingComponent)) { return; }
 	FVector HitLocation;//Out parameter
 	bool IsAHitLocation = GetSightRayHitLocation(HitLocation);
-	UE_LOG(LogTemp, Warning, TEXT("Got a hit location: %i"), IsAHitLocation);
+
 	if (IsAHitLocation) //Has "side-effect", is going to ray trace 
 	{
 		AimingComponent->AimAtTarget(HitLocation, AimingComponent->ProjectileLaunchSpeed);
@@ -48,7 +48,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *LookDirection.ToCompactString())
 		return GetLookVectorHitLocation(LookDirection, OutHitLocation);	
 	}
 

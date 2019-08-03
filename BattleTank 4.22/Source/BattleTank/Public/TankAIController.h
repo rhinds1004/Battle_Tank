@@ -20,13 +20,15 @@ private:
 
 	virtual void Tick(float DeltaTime) override;
 
-	//How close ai tank can get to target
-	UPROPERTY()
-	float AcceptanceRadius = 3000.f;
+
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Setup")
 	UTankAimingComponent* AimingComponent = nullptr;
+
+	//How close ai tank can get to target
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float AcceptanceRadius = 8000.f;
 
 public:
 	virtual void BeginPlay() override;
