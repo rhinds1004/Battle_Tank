@@ -43,7 +43,12 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	// ...
-	if ((GetWorld()->GetTimeSeconds() - LastFireTime) < ReloadTimeInSeconds)
+	if (AmmoCount <= 0)
+	{
+		FiringState = EFiringState::OutOfAmmo;
+		LastFireTime = GetWorld()->GetTimeSeconds(); //Ensure if ammo is replenished, tank can't instantly fire again.
+	}
+	else if (GetRemaingReloadTime() > 0.f)
 	{
 		FiringState = EFiringState::Reloading;
 	}
@@ -121,7 +126,7 @@ void UTankAimingComponent::Fire()
 
 
 
-	if (FiringState != EFiringState::Reloading)
+	if (FiringState != EFiringState::Reloading && FiringState != EFiringState::OutOfAmmo)
 	{
 		
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
@@ -129,6 +134,7 @@ void UTankAimingComponent::Fire()
 			Barrel->GetSocketRotation(FName("Projectile")));
 		Projectile->LaunchProjectile(ProjectileLaunchSpeed);
 		LastFireTime = GetWorld()->GetTimeSeconds();
+		SetAmmoCount(AmmoCount - 1);
 	}
 }
 
@@ -145,3 +151,40 @@ EFiringState UTankAimingComponent::GetFiringState() const
 {
 	return FiringState;
 }
+
+int UTankAimingComponent::GetAmmoCount() const
+{
+	return AmmoCount;
+}
+
+void UTankAimingComponent::SetAmmoCount(int NewAmmoCount)
+{
+	if (AmmoCount > 0)
+	{
+		AmmoCount = NewAmmoCount;
+	}
+	else
+	{
+		AmmoCount = 0;
+	}
+	
+}
+
+//Returns how much longer until the tank is ready to fire. If ready to fire now, 0.f is returned.
+//Uses world time, member variables ReloadTimeInSeconds and LastFireTime
+//Returns max reload time if ammo is zero.
+float UTankAimingComponent::GetRemaingReloadTime() const
+{
+	
+	float TimeRemaining =  ReloadTimeInSeconds - (GetWorld()->GetTimeSeconds() - LastFireTime);
+	if (TimeRemaining <= 0.f)
+	{
+		TimeRemaining = 0.f;
+	}
+	else if (AmmoCount == 0)
+	{
+		TimeRemaining = ReloadTimeInSeconds;
+	}
+	return TimeRemaining;
+}
+
