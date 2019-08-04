@@ -157,6 +157,7 @@ int UTankAimingComponent::GetAmmoCount() const
 	return AmmoCount;
 }
 
+//Sets Ammo count and will ensure ammo never goes belows 0
 void UTankAimingComponent::SetAmmoCount(int NewAmmoCount)
 {
 	if (AmmoCount > 0)
