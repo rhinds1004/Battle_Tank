@@ -73,7 +73,7 @@ public:
 	EFiringState GetFiringState() const;
 
 	UFUNCTION(BlueprintCallable, Category = "State")
-		int GetAmmoCount() const;
+		int32 GetAmmoCount() const;
 
 	UFUNCTION(BlueprintCallable, Category = "State")
 	void SetAmmoCount(int NewAmmoCount);
