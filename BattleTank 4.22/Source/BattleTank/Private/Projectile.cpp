@@ -5,6 +5,7 @@
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
 #include "Runtime/Engine/Classes/PhysicsEngine/RadialForceComponent.h "
+#include "Runtime/Engine/Public/TimerManager.h"
 
 
 
@@ -34,6 +35,7 @@ AProjectile::AProjectile()
 	ImpactForce = CreateDefaultSubobject<URadialForceComponent>(FName("Impact Force"));
 	ImpactForce->AttachToComponent(CollisionMesh, FAttachmentTransformRules::KeepRelativeTransform);
 
+	
 	InitialLifeSpan = 7.f;
 }
 
@@ -42,15 +44,19 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();	
 	CollisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
-
+	
 }
 
 void AProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit)
 {
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
-	CollisionMesh->SetVisibility(false);
 	ImpactForce->FireImpulse();
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+	FTimerHandle Timer;
+	GetWorld()->GetTimerManager().SetTimer(Timer, this, &AProjectile::OnTimerExpire, DestroyDelay, false);
+
 
 	
 }
@@ -76,3 +82,7 @@ void AProjectile::LaunchProjectile(float Speed)
 
 }
 
+void AProjectile::OnTimerExpire()
+{
+	Destroy();
+}
