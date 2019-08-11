@@ -4,6 +4,8 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
+#include "Runtime/Engine/Classes/PhysicsEngine/RadialForceComponent.h "
+
 
 
 // Sets default values
@@ -28,6 +30,10 @@ AProjectile::AProjectile()
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 	ProjectileMovementComponent->bAutoActivate = false;
+	
+	ImpactForce = CreateDefaultSubobject<URadialForceComponent>(FName("Impact Force"));
+	ImpactForce->AttachToComponent(CollisionMesh, FAttachmentTransformRules::KeepRelativeTransform);
+
 	InitialLifeSpan = 7.f;
 }
 
@@ -36,6 +42,7 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();	
 	CollisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
+
 }
 
 void AProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit)
@@ -43,6 +50,9 @@ void AProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor,
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	CollisionMesh->SetVisibility(false);
+	ImpactForce->FireImpulse();
+
+	
 }
 
 // Called every frame
@@ -63,4 +73,6 @@ void AProjectile::LaunchProjectile(float Speed)
 	ProjectileMovementComponent->InitialSpeed = Speed;
 	ProjectileMovementComponent->SetVelocityInLocalSpace(FVector::ForwardVector * Speed); 
 	ProjectileMovementComponent->Activate();
+
 }
+

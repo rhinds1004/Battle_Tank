@@ -21,16 +21,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	class UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
 
-	UPROPERTY(VisibleAnywhere, Category = "Setup")
-		class UStaticMeshComponent* CollisionMesh = nullptr;
-
-	UPROPERTY(VisibleAnywhere, Category = "Setup")
-		class UParticleSystemComponent* LaunchBlast = nullptr;
-
-	UPROPERTY(VisibleAnywhere, Category = "Setup")
-		class UParticleSystemComponent* ImpactBlast = nullptr;
 	
 public:	
 	// Called every frame
@@ -39,12 +30,23 @@ public:
 	void LaunchProjectile(float Speed);
 
 
-
 private:
 	// Function that is called when the projectile hits something.
 	UFUNCTION()
 		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
+	class UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		class UStaticMeshComponent* CollisionMesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		class UParticleSystemComponent* LaunchBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		class UParticleSystemComponent* ImpactBlast = nullptr;
 	
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		class URadialForceComponent* ImpactForce = nullptr;
 
 };
