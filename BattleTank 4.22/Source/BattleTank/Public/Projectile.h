@@ -24,6 +24,16 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float DestroyDelay = 10.f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float BaseDamage = 20.f;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float MinimumDamage = 5.0f;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float DamageInnerRadius = 1.f;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float DamageOuterRadius = 5.f;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float DamageFalloff = 2.f;
 	
 public:	
 	// Called every frame
