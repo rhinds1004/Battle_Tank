@@ -3,6 +3,7 @@
 #include "Tank.h"
 #include "Components/InputComponent.h"
 #include "Engine/World.h"
+#include "Runtime/Engine/Classes/Engine/EngineTypes.h"
 
 // Sets default values
 ATank::ATank()
@@ -21,4 +22,12 @@ void ATank::BeginPlay()
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+float ATank::TakeDamage(float DamageAmount, FDamageEvent const &DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float DamageTaken = 0.f;
+	UE_LOG(LogTemp, Warning, TEXT("DamageAmount: %f"), DamageAmount) //TODO remove this and add logic to change health.
+	
+	return DamageTaken;
 }

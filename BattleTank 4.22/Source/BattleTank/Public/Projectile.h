@@ -29,11 +29,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float MinimumDamage = 5.0f;
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		float DamageInnerRadius = 1.f;
+		float DamageInnerRadius = 100.f; //cm
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		float DamageOuterRadius = 5.f;
+		float DamageOuterRadius = 500.f; //cm
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		float DamageFalloff = 2.f;
+		float DamageFalloff = 200.f; //cm
 	
 public:	
 	// Called every frame

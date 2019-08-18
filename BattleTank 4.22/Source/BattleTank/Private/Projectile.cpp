@@ -46,24 +46,25 @@ void AProjectile::BeginPlay()
 
 void AProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit)
 {
-	UDamageTypeTankShell* DamageTypeClass = Cast<UDamageTypeTankShell>(UDamageTypeTankShell::StaticClass());
+	 
+	TSubclassOf<UDamageTypeTankShell>DamageTypeClass = UDamageTypeTankShell::StaticClass();
 	TArray< AActor* > IgnoreActors;
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ImpactForce->FireImpulse();
 
-	UGameplayStatics::ApplyRadialDamageWithFalloff
+	bool result = UGameplayStatics::ApplyRadialDamageWithFalloff //TODO Damage fall off doesn't seem to work. Does the same dmg no matter what. 
 	(
-		GetWorld(),
+		this,
 		BaseDamage,
 		MinimumDamage,
 		GetActorLocation(),
 		DamageInnerRadius,
 		DamageOuterRadius,
 		DamageFalloff,
-		nullptr, //TODO fix so UDamageType is properly used. Currently no damagetype is passed.
+		DamageTypeClass, 
 		IgnoreActors,
-		GetOwner(),
+		this,
 		GetInstigatorController(),
 		ECollisionChannel::ECC_Visibility
 	);
