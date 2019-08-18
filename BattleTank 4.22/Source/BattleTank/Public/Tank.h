@@ -20,6 +20,13 @@ public:
 protected:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser);
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float MaxHealth = 100.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Health")
+		float CurrentHealth = MaxHealth;
+
+
 private:
 	// Sets default values for this pawn's properties
 	ATank();
