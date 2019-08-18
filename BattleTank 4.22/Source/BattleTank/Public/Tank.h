@@ -16,10 +16,14 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser);
+	
+	//Returns Current Health as a percentage of starting health, between 0 and 1
+	UFUNCTION(BlueprintPure, Category = "Health")
+	float GetHealthPercent() const;
 
 protected:
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser);
-
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float MaxHealth = 100.f;
 

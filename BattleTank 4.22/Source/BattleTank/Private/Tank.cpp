@@ -5,6 +5,11 @@
 #include "Engine/World.h"
 #include "Runtime/Engine/Classes/Engine/EngineTypes.h"
 
+float ATank::GetHealthPercent() const
+{
+	return CurrentHealth / MaxHealth;
+}
+
 // Sets default values
 ATank::ATank()
 {
