@@ -132,6 +132,8 @@ void UTankAimingComponent::Fire()
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
 			Barrel->GetSocketLocation(FName("Projectile")),
 			Barrel->GetSocketRotation(FName("Projectile")));
+
+		Projectile->SetOwner(GetOwner());
 		Projectile->LaunchProjectile(ProjectileLaunchSpeed);
 		LastFireTime = GetWorld()->GetTimeSeconds();
 		SetAmmoCount(AmmoCount - 1);

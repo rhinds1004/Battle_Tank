@@ -33,7 +33,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float DamageOuterRadius = 500.f; //cm
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		float DamageFalloff = 200.f; //cm
+		float DamageFalloff = 2.f; 
 	
 public:	
 	// Called every frame
@@ -63,5 +63,6 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 		class URadialForceComponent* ImpactForce = nullptr;
+
 
 };

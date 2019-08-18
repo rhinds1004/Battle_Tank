@@ -26,6 +26,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 float ATank::TakeDamage(float DamageAmount, FDamageEvent const &DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
+	//float DamageTaken = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	float DamageTaken = 0.f;
 	UE_LOG(LogTemp, Warning, TEXT("DamageAmount: %f"), DamageAmount) //TODO remove this and add logic to change health.
 	

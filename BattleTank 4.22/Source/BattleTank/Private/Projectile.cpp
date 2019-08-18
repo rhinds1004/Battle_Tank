@@ -53,6 +53,7 @@ void AProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor,
 	ImpactBlast->Activate();
 	ImpactForce->FireImpulse();
 
+
 	bool result = UGameplayStatics::ApplyRadialDamageWithFalloff //TODO Damage fall off doesn't seem to work. Does the same dmg no matter what. 
 	(
 		this,
@@ -64,10 +65,11 @@ void AProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor,
 		DamageFalloff,
 		DamageTypeClass, 
 		IgnoreActors,
-		this,
-		GetInstigatorController(),
+		GetOwner(),
+		GetOwner()->GetInstigatorController(),
 		ECollisionChannel::ECC_Visibility
 	);
+
 	SetRootComponent(ImpactBlast);
 	CollisionMesh->DestroyComponent();
 	FTimerHandle Timer;
