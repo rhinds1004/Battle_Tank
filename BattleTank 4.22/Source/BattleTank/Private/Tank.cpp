@@ -21,6 +21,7 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed for BP begin Play to run!
+	
 }
 
 // Called to bind functionality to input
@@ -31,13 +32,11 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 float ATank::TakeDamage(float DamageAmount, FDamageEvent const &DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	//float DamageTaken = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	
 	float DamageTaken = FMath::Clamp<float>(DamageAmount, 0, CurrentHealth);
 	CurrentHealth -= DamageTaken;
 	if (CurrentHealth <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Died!!"))
+		OnDeath.Broadcast();
 	}
 	return DamageTaken;
 }

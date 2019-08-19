@@ -24,6 +24,7 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void SetPawn(APawn* InPawn) override;
 
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Crosshair")
@@ -32,6 +33,9 @@ public:
 		float CrosshairYLocation = 0.3333;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Crosshair")
 		float LineTraceRange = 1000000;
+
+	UFUNCTION()
+		void OnTankDeath();
 
 protected:
 

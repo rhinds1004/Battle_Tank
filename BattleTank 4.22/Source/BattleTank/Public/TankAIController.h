@@ -20,6 +20,8 @@ private:
 
 	virtual void Tick(float DeltaTime) override;
 
+	//Gets call when the pawn is possed
+	virtual void SetPawn(APawn* InPawn) override;
 
 
 protected:
@@ -30,7 +32,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float AcceptanceRadius = 8000.f;
 
+	UFUNCTION()
+		void OnTankDeath();
+
 public:
 	virtual void BeginPlay() override;
+
 
 };
