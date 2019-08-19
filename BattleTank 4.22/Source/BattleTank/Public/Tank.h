@@ -35,7 +35,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float MaxHealth = 100.f;
 
-	UPROPERTY(VisibleAnywhere, Category = "Health")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Health")
 		float CurrentHealth = MaxHealth;
 
 

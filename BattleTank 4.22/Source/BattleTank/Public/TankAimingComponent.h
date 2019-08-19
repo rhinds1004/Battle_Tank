@@ -53,7 +53,7 @@ protected:
 		float ReloadTimeInSeconds = 3.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "State")
-		int AmmoCount = 2;
+		int AmmoCount = 15;
 
 public:	
 	// Called every frame

@@ -21,7 +21,7 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed for BP begin Play to run!
-	
+	CurrentHealth = MaxHealth;
 }
 
 // Called to bind functionality to input
