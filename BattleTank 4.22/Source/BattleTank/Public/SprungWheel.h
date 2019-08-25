@@ -19,13 +19,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
 		class UStaticMeshComponent* Mass = nullptr;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
 		class UStaticMeshComponent* Wheel = nullptr;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
 		class UPhysicsConstraintComponent* Spring = nullptr;
 
 public:	
