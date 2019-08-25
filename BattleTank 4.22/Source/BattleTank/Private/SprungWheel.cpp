@@ -10,12 +10,31 @@ ASprungWheel::ASprungWheel()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+
 	Mass = CreateDefaultSubobject<UStaticMeshComponent>(FName("Mass"));
+	
+	Mass->SetSimulatePhysics(true);
 	SetRootComponent(Mass);
 	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
+	Wheel->SetSimulatePhysics(true);
 
-	Spring = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Spring"));
+	
+	MassWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("MassWheelConstraint"));
 
+
+	MassWheelConstraint->SetAngularSwing1Limit(EAngularConstraintMotion::ACM_Locked, 0);
+	MassWheelConstraint->SetAngularSwing2Limit(EAngularConstraintMotion::ACM_Locked, 0);
+	MassWheelConstraint->SetAngularTwistLimit(EAngularConstraintMotion::ACM_Locked, 0);
+	MassWheelConstraint->SetLinearXLimit(ELinearConstraintMotion::LCM_Locked, 0);
+	MassWheelConstraint->SetLinearYLimit(ELinearConstraintMotion::LCM_Locked, 0);
+	MassWheelConstraint->SetLinearZLimit(ELinearConstraintMotion::LCM_Limited, LinearMotionZLimit);
+	MassWheelConstraint->SetLinearDriveParams(LinearDrivePosStrength, LinearDriveVeloStrength, LinearDriveFoceLimit);
+	MassWheelConstraint->SetLinearPositionDrive(false, false, true);
+	MassWheelConstraint->SetLinearVelocityDrive(false, false, true);
+
+	MassWheelConstraint->SetupAttachment(Mass);
+	Wheel->SetupAttachment(Mass);
 
 }
 
@@ -23,7 +42,8 @@ ASprungWheel::ASprungWheel()
 void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+
 }
 
 // Called every frame

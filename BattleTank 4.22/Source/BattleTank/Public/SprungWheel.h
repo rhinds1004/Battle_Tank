@@ -22,11 +22,25 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 		class UStaticMeshComponent* Mass = nullptr;
 
+
+
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 		class UStaticMeshComponent* Wheel = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
-		class UPhysicsConstraintComponent* Spring = nullptr;
+		class UPhysicsConstraintComponent* MassWheelConstraint = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+		float LinearDrivePosStrength = 5000.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+		float LinearDriveVeloStrength = 2000.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+		float LinearDriveFoceLimit = 0.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+		float LinearMotionZLimit = 50.f;
 
 public:	
 	// Called every frame
