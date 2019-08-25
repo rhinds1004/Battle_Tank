@@ -42,6 +42,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 		float LinearMotionZLimit = 50.f;
 
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
