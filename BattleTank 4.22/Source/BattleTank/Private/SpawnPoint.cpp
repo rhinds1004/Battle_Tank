@@ -3,6 +3,7 @@
 
 #include "SpawnPoint.h"
 #include "Runtime/Engine/Classes/GameFramework/Actor.h"
+#include "Engine/World.h"
 
 
 // Sets default values for this component's properties
