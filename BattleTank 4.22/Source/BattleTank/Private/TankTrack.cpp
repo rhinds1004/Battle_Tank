@@ -43,7 +43,6 @@ void UTankTrack::DriveTrack(float CurrentThrottle)
 	float ForceApplied = CurrentThrottle * TrackMaxDriveForce;
 	TArray<ASprungWheel*> Wheels = GetWheels();
 	float ForcePerWheel = ForceApplied / Wheels.Num();
-	UE_LOG(LogTemp, Warning, TEXT("ForcePerWheel: %f"), ForcePerWheel)
 	for (ASprungWheel* Wheel : Wheels)
 	{
 		Wheel->AddDrivingForce(ForcePerWheel);
