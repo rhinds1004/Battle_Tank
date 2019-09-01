@@ -19,9 +19,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	/*
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 		class UStaticMeshComponent* Mass = nullptr;
-
+*/
 
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
@@ -31,10 +32,10 @@ protected:
 		class UPhysicsConstraintComponent* MassWheelConstraint = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
-		float LinearDrivePosStrength = 5000.f;
+		float LinearDrivePosStrength = 500.f;
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
-		float LinearDriveVeloStrength = 2000.f;
+		float LinearDriveVeloStrength = 200.f;
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 		float LinearDriveFoceLimit = 0.f;
@@ -48,4 +49,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
+	void SetupConstraint();
 };

@@ -26,7 +26,7 @@ void USpawnPoint::BeginPlay()
 	AActor* NewActor = GetWorld()->SpawnActorDeferred<AActor>(SpawnClass, GetComponentTransform());
 	if (!NewActor) { return; }
 	NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);
-	UGameplayStatics::FinishSpawningActor(NewActor, GetComponentTransform());
+	//UGameplayStatics::FinishSpawningActor(NewActor, GetComponentTransform());
 }
 
 
