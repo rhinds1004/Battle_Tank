@@ -21,27 +21,18 @@ class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 private:
 	UTankTrack();
 
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+	TArray<class ASprungWheel*> GetWheels() const;
 
 
 public:
-
-	virtual void BeginPlay() override;
-
-	void ApplySidewaysForce();
 
 	UFUNCTION(BlueprintCallable, category = "Input")
 	void SetThrottle(float ThrottleAmt);
 
 	UFUNCTION()
-	void DriveTrack();
-
-	UPROPERTY()
-		float CurrentThrottle = 0;
+	void DriveTrack(float CurrentThrottle);
 
 	UPROPERTY(EditDefaultsOnly, category = "Setup")
 	float TrackMaxDriveForce = 400000;  //Assume tank weight is 40 and 1 g accelleration
-	
 	
 };
