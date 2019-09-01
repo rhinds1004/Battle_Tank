@@ -16,18 +16,21 @@ public:
 	// Sets default values for this component's properties
 	USpawnPoint();
 
+	UFUNCTION(BlueprintPure, Category = "SpawnPoint Actor")
+		AActor* GetSpawnedActor() const;
+
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		TSubclassOf<class AActor> SpawnClass;
-
-
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-
+	
+private:
+	UPROPERTY()
+	AActor* SpawnedActor = nullptr;
 		
 };

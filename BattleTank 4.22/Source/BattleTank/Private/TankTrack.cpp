@@ -4,7 +4,7 @@
 #include "Runtime/Engine/Public/DrawDebugHelpers.h"
 #include "Runtime/Engine/Classes/GameFramework/Actor.h"
 #include "SprungWheel.h"
-#include "Runtime/Engine/Classes/PhysicsEngine/PhysicsConstraintComponent.h"
+#include "SpawnPoint.h"
 
 UTankTrack::UTankTrack()
 {
@@ -20,10 +20,10 @@ TArray<ASprungWheel*> UTankTrack::GetWheels() const
 	ASprungWheel* MyWheel;
 	for (USceneComponent* MyScenseComponent : MySceneComponents)
 	{
-		UPhysicsConstraintComponent* MyConstraintWheel = Cast<UPhysicsConstraintComponent>(MyScenseComponent);
-		if (MyConstraintWheel)
+		USpawnPoint* MySpawnPoint = Cast<USpawnPoint>(MyScenseComponent);
+		if (MySpawnPoint)
 		{
-			MyWheel = Cast<ASprungWheel>(MyConstraintWheel->GetOwner());
+			MyWheel = Cast<ASprungWheel>(MySpawnPoint->GetSpawnedActor());
 			if(MyWheel)
 			MyWheels.Add(MyWheel);
 		}
@@ -43,7 +43,7 @@ void UTankTrack::DriveTrack(float CurrentThrottle)
 	float ForceApplied = CurrentThrottle * TrackMaxDriveForce;
 	TArray<ASprungWheel*> Wheels = GetWheels();
 	float ForcePerWheel = ForceApplied / Wheels.Num();
-
+	UE_LOG(LogTemp, Warning, TEXT("ForcePerWheel: %f"), ForcePerWheel)
 	for (ASprungWheel* Wheel : Wheels)
 	{
 		Wheel->AddDrivingForce(ForcePerWheel);
