@@ -26,10 +26,16 @@ protected:
 
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
-		class UStaticMeshComponent* Wheel = nullptr;
+		class UPhysicsConstraintComponent* AxleWheelConstraint = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
-		class UPhysicsConstraintComponent* MassWheelConstraint = nullptr;
+		class USphereComponent* Axle = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+		class USphereComponent* Wheel = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+		class UPhysicsConstraintComponent* MassAxleConstraint = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 		float LinearDrivePosStrength = 500.f;

@@ -4,6 +4,7 @@
 #include "SprungWheel.h"
 #include "Runtime/Engine/Classes/PhysicsEngine/PhysicsConstraintComponent.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
+#include "Runtime/Engine/Classes/Components/SphereComponent.h"
 
 // Sets default values
 ASprungWheel::ASprungWheel()
@@ -11,29 +12,38 @@ ASprungWheel::ASprungWheel()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	MassWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("MassWheelConstraint"));
-	SetRootComponent(MassWheelConstraint);
+	MassAxleConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("MassWheelConstraint"));
+	SetRootComponent(MassAxleConstraint);
 
-	MassWheelConstraint->SetAngularSwing1Limit(EAngularConstraintMotion::ACM_Locked, 0);
-	MassWheelConstraint->SetAngularSwing2Limit(EAngularConstraintMotion::ACM_Locked, 0);
-	MassWheelConstraint->SetAngularTwistLimit(EAngularConstraintMotion::ACM_Locked, 0);
-	MassWheelConstraint->SetLinearXLimit(ELinearConstraintMotion::LCM_Locked, 0);
-	MassWheelConstraint->SetLinearYLimit(ELinearConstraintMotion::LCM_Locked, 0);
-	MassWheelConstraint->SetLinearZLimit(ELinearConstraintMotion::LCM_Limited, LinearMotionZLimit);
-	MassWheelConstraint->SetLinearDriveParams(LinearDrivePosStrength, LinearDriveVeloStrength, LinearDriveFoceLimit);
-	MassWheelConstraint->SetLinearPositionDrive(false, false, true);
-	MassWheelConstraint->SetLinearVelocityDrive(false, false, true);
+	MassAxleConstraint->SetAngularSwing1Limit(EAngularConstraintMotion::ACM_Locked, 0);
+	MassAxleConstraint->SetAngularSwing2Limit(EAngularConstraintMotion::ACM_Locked, 0);
+	MassAxleConstraint->SetAngularTwistLimit(EAngularConstraintMotion::ACM_Locked, 0);
+	MassAxleConstraint->SetLinearXLimit(ELinearConstraintMotion::LCM_Locked, 0);
+	MassAxleConstraint->SetLinearYLimit(ELinearConstraintMotion::LCM_Locked, 0);
+	MassAxleConstraint->SetLinearZLimit(ELinearConstraintMotion::LCM_Limited, LinearMotionZLimit);
+	MassAxleConstraint->SetLinearDriveParams(LinearDrivePosStrength, LinearDriveVeloStrength, LinearDriveFoceLimit);
+	MassAxleConstraint->SetLinearPositionDrive(false, false, true);
+	MassAxleConstraint->SetLinearVelocityDrive(false, false, true);
 
 
 	/*
 	Mass = CreateDefaultSubobject<UStaticMeshComponent>(FName("Mass"));
 	Mass->SetSimulatePhysics(true);
-	Mass->SetupAttachment(MassWheelConstraint);
+	Mass->SetupAttachment(MassAxleConstraint);
 	*/
 
-	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
+
+
+	Axle = CreateDefaultSubobject<USphereComponent>(FName("Axle"));
+	Axle->SetSimulatePhysics(true);
+	Axle->SetupAttachment(MassAxleConstraint);
+
+	AxleWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("AxleWheelConstraint"));
+	AxleWheelConstraint->SetupAttachment(Axle);
+
+	Wheel = CreateDefaultSubobject<USphereComponent>(FName("Wheel"));
 	Wheel->SetSimulatePhysics(true);
-	Wheel->SetupAttachment(MassWheelConstraint);
+	Wheel->SetupAttachment(Axle);
 
 }
 
@@ -67,6 +77,7 @@ void ASprungWheel::SetupConstraint()
 	if (!GetAttachParentActor()) { return; }
 	UPrimitiveComponent* BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
 	if (!BodyRoot) { return; }
-	MassWheelConstraint->SetConstrainedComponents(BodyRoot, NAME_None, Wheel, NAME_None);
+	MassAxleConstraint->SetConstrainedComponents(BodyRoot, NAME_None, Axle, NAME_None);
+	AxleWheelConstraint->SetConstrainedComponents(Axle, NAME_None, Wheel, NAME_None);
 }
 
