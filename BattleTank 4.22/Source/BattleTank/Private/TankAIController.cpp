@@ -36,6 +36,8 @@ void ATankAIController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	APawn* PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 
+	//This will fail the assert if the ai tank destorys the player tank. 
+	//TODO Fix??
 	if (!ensure(PlayerTank) || !ensure(AimingComponent)) { return; }
 	
 		//Move to player
