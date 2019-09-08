@@ -27,9 +27,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 		class UPhysicsConstraintComponent* AxleWheelConstraint = nullptr;
 
+	/*
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 		class USphereComponent* Axle = nullptr;
-
+*/
+	UPROPERTY(VisibleAnywhere, Category = "Setup")
+		class UStaticMeshComponent* Axle = nullptr;
+	
 	UPROPERTY(VisibleAnywhere, Category = "Setup")
 		class USphereComponent* Wheel = nullptr;
 

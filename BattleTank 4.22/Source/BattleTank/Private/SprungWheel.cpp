@@ -34,11 +34,14 @@ ASprungWheel::ASprungWheel()
 	*/
 
 
-
+	Axle = CreateDefaultSubobject<UStaticMeshComponent>(FName("Axle"));
+	Axle->SetSimulatePhysics(true);
+	Axle->SetupAttachment(MassAxleConstraint);
+	/*
 	Axle = CreateDefaultSubobject<USphereComponent>(FName("Axle"));
 	Axle->SetSimulatePhysics(true);
 	Axle->SetupAttachment(MassAxleConstraint);
-
+	*/
 	AxleWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("AxleWheelConstraint"));
 	AxleWheelConstraint->SetupAttachment(Axle);
 
