@@ -20,6 +20,9 @@ public:
 
 	void AddDrivingForce(float ForceMagnitude);
 
+	UFUNCTION()
+		class USphereComponent* GetWheel();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -81,6 +81,11 @@ void ASprungWheel::AddDrivingForce(float ForceMagnitudeToApply)
 	TotalForceMagnitudeThisFrame += ForceMagnitudeToApply;
 }
 
+USphereComponent * ASprungWheel::GetWheel()
+{
+	return Wheel;
+}
+
 void ASprungWheel::SetupConstraint()
 {
 	if (!GetAttachParentActor()) { return; }
