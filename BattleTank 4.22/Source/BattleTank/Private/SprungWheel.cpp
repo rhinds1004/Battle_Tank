@@ -5,6 +5,7 @@
 #include "Runtime/Engine/Classes/PhysicsEngine/PhysicsConstraintComponent.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "Runtime/Engine/Classes/Components/SphereComponent.h"
+#include "Components/SplineComponent.h"
 
 // Sets default values
 ASprungWheel::ASprungWheel()
@@ -49,6 +50,7 @@ ASprungWheel::ASprungWheel()
 	Wheel->SetSimulatePhysics(true);
 	Wheel->SetupAttachment(Axle);
 
+	
 }
 
 // Called when the game starts or when spawned
